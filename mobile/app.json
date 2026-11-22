@@ -7,10 +7,6 @@
     "icon": "./assets/icon.png",
     "scheme": "careerguide",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "backgroundColor": "#315D48"
-    },
     "ios": {
       "supportsTablet": true
     },
@@ -28,6 +24,16 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "73f5d874-ee3d-4c82-8944-2b80dd690a3f"
+      }
+    }
   }
 }
