@@ -1,0 +1,1425 @@
+[
+  {
+    "id": "a1000000-0000-0000-0000-000000000006",
+    "slug": "frontend-developer",
+    "name": "Frontend Developer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹25,000 - ₹55,000 / month (Entry-level in India)",
+    "training_duration": "6 Months",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th Pass / Diploma / Degree (Any Stream)",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass / Diploma / Degree (Any Stream)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "HTML",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "CSS",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "JavaScript",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "React",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "TypeScript",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Frontend Developer",
+        "description": "Builds interactive, user-facing web and mobile browser experiences using HTML, CSS, JavaScript, and React."
+      },
+      "te": {
+        "title": "ఫ్రంటెండ్ డెవలపర్ (Frontend Developer)",
+        "description": "హెచ్‌టిఎమ్‌ఎల్ (HTML), సిఎస్‌ఎస్ (CSS), జావాస్క్రిప్ట్ మరియు రియాక్ట్ ఉపయోగించి ఆకర్షణీయమైన వెబ్‌సైట్లు మరియు మొబైల్ వెబ్ ఇంటర్‌ఫేస్‌లను రూపొందించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "फ्रंटएंड डेवलपर (Frontend Developer)",
+        "description": "एचटीएमएल, सीएसएस, जावास्क्रिप्ट और रिएक्ट का उपयोग करके उपयोगकर्ता के अनुकूल वेबसाइटों और वेब अनुप्रयोगों का निर्माण करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000007",
+    "slug": "backend-developer",
+    "name": "Backend Developer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹28,000 - ₹60,000 / month (Entry-level in India)",
+    "training_duration": "6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Polytechnic Diploma / B.Sc / BCA / B.Tech",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Polytechnic Diploma / B.Sc / BCA / B.Tech",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Node.js",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Express.js",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "SQL",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "PostgreSQL",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Python",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Linux",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Backend Developer",
+        "description": "Designs server architectures, secure business logic, and databases that power websites and mobile apps."
+      },
+      "te": {
+        "title": "బ్యాకెండ్ డెవలపర్ (Backend Developer)",
+        "description": "వెబ్‌సైట్లు మరియు మొబైల్ యాప్‌ల వెనుక ఉండే సర్వర్ సిస్టమ్‌లు, డేటాబేస్‌లు మరియు సెక్యూరిటీ లాజిక్‌ను నిర్మించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "बैकएंड डेवलपर (Backend Developer)",
+        "description": "वेबसाइटों और ऐप्स को शक्ति देने वाले सर्वर, डेटाबेस और व्यावसायिक तर्क (Business Logic) का निर्माण और रखरखाव करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000008",
+    "slug": "full-stack-developer",
+    "name": "Full Stack Developer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹30,000 - ₹70,000 / month (Entry-level in India)",
+    "training_duration": "8 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Polytechnic Diploma / B.Sc / BCA / B.Tech",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Polytechnic Diploma / B.Sc / BCA / B.Tech",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "HTML",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "CSS",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "JavaScript",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "React",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Node.js",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "PostgreSQL",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Full Stack Developer",
+        "description": "End-to-end software creator proficient in both frontend user interfaces and backend server architecture."
+      },
+      "te": {
+        "title": "ఫుల్ స్టాక్ డెవలపర్ (Full Stack Developer)",
+        "description": "ఫ్రంటెండ్ మరియు బ్యాకెండ్ రెండింటినీ సమగ్రంగా అభివృద్ధి చేయగల పూర్తి స్థాయి సాఫ్ట్‌వేర్ నిపుణుడు."
+      },
+      "hi": {
+        "title": "फुल स्टैक डेवलपर (Full Stack Developer)",
+        "description": "फ्रंटएंड यूजर इंटरफेस और बैकएंड सर्वर दोनों में माहिर संपूर्ण सॉफ्टवेयर निर्माता।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000009",
+    "slug": "software-engineer",
+    "name": "Software Engineer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹35,000 - ₹75,000 / month (Campus / Fresher)",
+    "training_duration": "6 to 12 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "B.E / B.Tech / MCA / BCA / B.Sc Computer Science",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: B.E / B.Tech / MCA / BCA / B.Sc Computer Science",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Java",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "C++",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "SQL",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Analytical Thinking",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Software Engineer",
+        "description": "Applies rigorous engineering principles, data structures, and algorithms to develop reliable, scalable software applications."
+      },
+      "te": {
+        "title": "సాఫ్ట్‌వేర్ ఇంజనీర్ (Software Engineer)",
+        "description": "కంప్యూటర్ అల్గోరిథంలు, డేటా స్ట్రక్చర్స్ మరియు ఇంజనీరింగ్ సూత్రాలను ఉపయోగించి పెద్ద ఎత్తున పనిచేసే సాఫ్ట్‌వేర్ ప్రోగ్రామ్‌లను అభివృద్ధి చేసే నిపుణుడు."
+      },
+      "hi": {
+        "title": "सॉफ्टवेयर इंजीनियर (Software Engineer)",
+        "description": "डेटा संरचनाओं और एल्गोरिदम के सिद्धांतों को लागू करके मजबूत और स्केलेबल सॉफ्टवेयर सिस्टम का निर्माण करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000010",
+    "slug": "data-analyst",
+    "name": "Data Analyst",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹25,000 - ₹50,000 / month (Entry-level in India)",
+    "training_duration": "4 to 6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Bachelor Degree (B.Sc, BCA, B.Com, B.Tech, Any Quantitative stream)",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Bachelor Degree (B.Sc, BCA, B.Com, B.Tech, Any Quantitative stream)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Excel",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "SQL",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Data Analysis",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Statistics",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Python",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Data Analyst",
+        "description": "Transforms raw numbers, customer records, and operational spreadsheets into actionable business insights using SQL, Excel, and Power BI."
+      },
+      "te": {
+        "title": "డేటా అనలిస్ట్ (Data Analyst)",
+        "description": "వ్యాపార సమాచారాన్ని, సంఖ్యలను విశ్లేషించి మేనేజ్‌మెంట్‌కు సరైన నిర్ణయాలు తీసుకోవడానికి నివేదికలు అందించే విశ్లేషకుడు."
+      },
+      "hi": {
+        "title": "डेटा विश्लेषक (Data Analyst)",
+        "description": "व्यावसायिक निर्णय लेने के लिए कच्चे डेटा और स्प्रेडशीट को सार्थक अंतर्दृष्टि और विज़ुअल डैशबोर्ड में परिवर्तित करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000011",
+    "slug": "data-scientist",
+    "name": "Data Scientist",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹45,000 - ₹95,000 / month (Entry-level in India)",
+    "training_duration": "8 to 12 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Bachelor / Master in Computer Science, Math, Stats, or Engineering",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Bachelor / Master in Computer Science, Math, Stats, or Engineering",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Python",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Statistics",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Data Analysis",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "SQL",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Analytical Thinking",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Data Scientist",
+        "description": "Builds machine learning models, statistical predictors, and predictive AI systems from large datasets."
+      },
+      "te": {
+        "title": "డేటా సైంటిస్ట్ (Data Scientist)",
+        "description": "భారీ సమాచారం నుండి మెషిన్ లెర్నింగ్ మరియు ఆర్టిఫిషియల్ ఇంటెలిజెన్స్ (AI) మోడళ్లను నిర్మించి భవిష్యత్ ఫలితాలను అంచనా వేసే నిపుణుడు."
+      },
+      "hi": {
+        "title": "डेटा वैज्ञानिक (Data Scientist)",
+        "description": "जटिल डेटासेट से भविष्यवाणियां करने के लिए गणितीय मॉडल, मशीन लर्निंग और आर्टिफिशियल इंटेलिजेंस एल्गोरिदम विकसित करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000012",
+    "slug": "cybersecurity-analyst",
+    "name": "Cybersecurity Analyst",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹30,000 - ₹65,000 / month (Entry-level in India)",
+    "training_duration": "6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Polytechnic Diploma / B.Sc / BCA / B.Tech",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Polytechnic Diploma / B.Sc / BCA / B.Tech",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Cybersecurity Fundamentals",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Networking",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Linux",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Python",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Critical Thinking",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Cybersecurity Analyst",
+        "description": "Safeguards computer networks, user data, and servers from malicious breaches, malware, phishing, and unauthorized intrusion."
+      },
+      "te": {
+        "title": "సైబర్ సెక్యూరిటీ అనలిస్ట్ (Cybersecurity Analyst)",
+        "description": "కంప్యూటర్ నెట్‌వర్క్‌లు, ప్రభుత్వ మరియు బ్యాంకింగ్ డేటాను సైబర్ దాడులు, హ్యాకర్ల నుండి రక్షించే భద్రతా నిపుణుడు."
+      },
+      "hi": {
+        "title": "साइबर सुरक्षा विश्लेषक (Cybersecurity Analyst)",
+        "description": "कंप्यूटर नेटवर्क, डेटा और सर्वरों को हैकर्स, वायरस और अनधिकृत साइबर हमलों से सुरक्षित रखता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000013",
+    "slug": "cloud-support-associate",
+    "name": "Cloud Support Associate",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹26,000 - ₹55,000 / month (Entry-level in India)",
+    "training_duration": "4 to 6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Polytechnic Diploma / B.Sc / BCA / B.Tech",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Polytechnic Diploma / B.Sc / BCA / B.Tech",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Cloud Computing",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Linux",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Networking",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Cloud Support Associate",
+        "description": "Maintains, provisions, and troubleshoots cloud server instances, virtual networks, and databases on AWS, Azure, or Google Cloud."
+      },
+      "te": {
+        "title": "క్లౌడ్ సపోర్ట్ అసోసియేట్ (Cloud Support Associate)",
+        "description": "AWS, Azure వంటి క్లౌడ్ ప్లాట్‌ఫారమ్‌లలో వర్చువల్ సర్వర్లు, డేటా స్టోరేజ్ మరియు నెట్‌వర్క్ సమస్యలను పరిష్కరించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "क्लाउड सपोर्ट एसोसिएट (Cloud Support Associate)",
+        "description": "AWS, Azure या Google Cloud पर वर्चुअल सर्वर, डेटा स्टोरेज और नेटवर्क का प्रबंधन और तकनीकी समस्याओं का समाधान करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000014",
+    "slug": "devops-engineer",
+    "name": "DevOps Engineer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹35,000 - ₹80,000 / month (Entry-level in India)",
+    "training_duration": "6 to 9 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Bachelor Degree in Computer Science, IT or related field",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Bachelor Degree in Computer Science, IT or related field",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Linux",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Cloud Computing",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Python",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Networking",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "DevOps Engineer",
+        "description": "Bridges software development and IT operations through automated CI/CD pipelines, containerization (Docker), and cloud infrastructure."
+      },
+      "te": {
+        "title": "డెవ్‌ఆప్స్ ఇంజనీర్ (DevOps Engineer)",
+        "description": "సాఫ్ట్‌వేర్ అభివృద్ధి మరియు సర్వర్ కార్యకలాపాలను ఆటోమేటెడ్ పైప్‌లైన్లు మరియు క్లౌడ్ టూల్స్ ద్వారా అనుసంధానించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "डेवऑप्स इंजीनियर (DevOps Engineer)",
+        "description": "स्वचालित सीआई/सीडी पाइपलाइन और कंटेनर तकनीक (Docker) के माध्यम से सॉफ्टवेयर डेवलपमेंट और आईटी ऑपरेशन्स को जोड़ता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000015",
+    "slug": "mobile-app-developer",
+    "name": "Mobile Application Developer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹26,000 - ₹55,000 / month (Entry-level in India)",
+    "training_duration": "6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Polytechnic Diploma / BCA / B.Sc / B.Tech",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Polytechnic Diploma / BCA / B.Sc / B.Tech",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "React Native",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "JavaScript",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Git",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "TypeScript",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "UI/UX Design",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Mobile Application Developer",
+        "description": "Creates native and cross-platform smartphone applications for Android and iOS devices using React Native, Java, or Flutter."
+      },
+      "te": {
+        "title": "మొబైల్ యాప్ డెవలపర్ (Mobile Application Developer)",
+        "description": "ఆండ్రాయిడ్ మరియు ఐఓఎస్ స్మార్ట్‌ఫోన్ల కోసం సులభంగా పనిచేసే మొబైల్ అప్లికేషన్లను రూపొందించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "मोबाइल ऐप डेवलपर (Mobile Application Developer)",
+        "description": "स्मार्टफोन के लिए एंड्रॉइड और आईओएस प्लेटफॉर्म पर उच्च गुणवत्ता वाले मोबाइल ऐप का निर्माण करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000016",
+    "slug": "ui-ux-designer",
+    "name": "UI/UX Designer",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹22,000 - ₹50,000 / month (Entry-level in India)",
+    "training_duration": "4 to 6 Months",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th Pass / Any Degree / Diploma",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass / Any Degree / Diploma",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "UI/UX Design",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Figma",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Creativity",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "HTML",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technical",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "UI/UX Designer",
+        "description": "Researches user needs and crafts beautiful, intuitive digital visual interfaces, design systems, and wireframes."
+      },
+      "te": {
+        "title": "యుఐ/యుఎక్స్ డిజైనర్ (UI/UX Designer)",
+        "description": "డిజిటల్ వెబ్‌సైట్లు మరియు మొబైల్ యాప్‌లను ప్రజలు సులభంగా అర్థం చేసుకునేలా ఆకర్షణీయమైన స్క్రీన్‌లను డిజైన్ చేసే కళాకారుడు/నిపుణుడు."
+      },
+      "hi": {
+        "title": "यूआई/यूएक्स डिज़ाइनर (UI/UX Designer)",
+        "description": "वेबसाइटों और मोबाइल एप्लिकेशन के लिए उपयोगकर्ता के अनुकूल, सुंदर और सहज दृश्य इंटरफेस और प्रोटोटाइप डिजाइन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000017",
+    "slug": "digital-marketing-specialist",
+    "name": "Digital Marketing Specialist",
+    "category": "business",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹42,000 / month (Entry-level in India)",
+    "training_duration": "3 to 6 Months",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th Pass / Any Graduation Degree",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass / Any Graduation Degree",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Digital Marketing",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "SEO",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Creativity",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Data Analysis",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "business",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Digital Marketing Specialist",
+        "description": "Promotes products, brands, and local services across search engines, social media platforms, email, and YouTube."
+      },
+      "te": {
+        "title": "డిజిటల్ మార్కెటింగ్ స్పెషలిస్ట్ (Digital Marketing Specialist)",
+        "description": "గూగుల్, యూట్యూబ్, సోషల్ మీడియా ద్వారా వ్యాపారాలు మరియు బ్రాండ్లను ప్రచారం చేసి కస్టమర్లను ఆకర్షించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "डिजिटल मार्केटिंग विशेषज्ञ (Digital Marketing Specialist)",
+        "description": "सर्च इंजन, सोशल मीडिया, यूट्यूब और विज्ञापनों के माध्यम से उत्पादों और सेवाओं का ऑनलाइन प्रचार और बिक्री बढ़ाता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000018",
+    "slug": "accountant",
+    "name": "Accountant",
+    "category": "business",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹18,000 - ₹38,000 / month (Entry-level in India)",
+    "training_duration": "3 to 6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "B.Com / BBA / Any Graduate with Accounting certification",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: B.Com / BBA / Any Graduate with Accounting certification",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Accounting",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Excel",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Analytical Thinking",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "business",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Accountant",
+        "description": "Maintains verified financial records, prepares balance sheets, manages GST/tax filings, and audits company ledgers."
+      },
+      "te": {
+        "title": "అకౌంటెంట్ (Accountant)",
+        "description": "వ్యాపార లావాదేవీల లెక్కలను రాయడం, జీఎస్టీ (GST) రిటర్న్స్ ఫైల్ చేయడం మరియు బ్యాలెన్స్ షీట్లను తయారు చేసే నిపుణుడు."
+      },
+      "hi": {
+        "title": "लेखाकार (Accountant)",
+        "description": "वित्तीय रिकॉर्ड का रखरखाव, बैलेंस शीट की तैयारी, जीएसटी व टैक्स फाइलिंग और कंपनी के खातों का ऑडिट करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000019",
+    "slug": "business-analyst",
+    "name": "Business Analyst",
+    "category": "business",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹35,000 - ₹70,000 / month (Entry-level in India)",
+    "training_duration": "6 Months",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Bachelor Degree (B.Tech, BBA, B.Com, BCA, or MBA)",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Bachelor Degree (B.Tech, BBA, B.Com, BCA, or MBA)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Analytical Thinking",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Excel",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "SQL",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Decision Making",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "business",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Business Analyst",
+        "description": "Analyzes organizational processes, documents technical requirements, and bridges corporate management with software engineering teams."
+      },
+      "te": {
+        "title": "బిజినెస్ అనలిస్ట్ (Business Analyst)",
+        "description": "వ్యాపార అవసరాలను అర్థం చేసుకుని, వాటికి అనుగుణంగా సాంకేతిక సాఫ్ట్‌వేర్ టీమ్‌లకు మార్గదర్శనం చేసే వ్యూహాత్మక విశ్లేషకుడు."
+      },
+      "hi": {
+        "title": "बिजनेस एनालिस्ट (Business Analyst)",
+        "description": "व्यावसायिक प्रक्रियाओं का विश्लेषण करता है और क्लाइंट की जरूरतों को तकनीकी सॉफ्टवेयर टीम के लिए विस्तृत आवश्यकताओं में बदलता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000020",
+    "slug": "govt-administrative-services",
+    "name": "Government Administrative Services",
+    "category": "government_services",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹35,000 - ₹75,000 / month (Basic Pay + DA + HRA per 7th Pay/PRC)",
+    "training_duration": "12 to 18 Months (Preparation & Academy Training)",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Any Bachelor Degree from a recognized University",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Any Bachelor Degree from a recognized University",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Critical Thinking",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Leadership",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Decision Making",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [],
+    "matching_interests": [
+      "government_services",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Government Administrative Services",
+        "description": "Public administration officers recruited through APPSC/UPSC/SSC managing revenue, welfare schemes, district governance, and public services."
+      },
+      "te": {
+        "title": "ప్రభుత్వ పరిపాలనా సేవలు (APPSC / UPSC / SSC)",
+        "description": "ప్రభుత్వ సంక్షేమ పథకాలను అమలు చేస్తూ, ప్రజా సమస్యలను పరిష్కరించే పరిపాలనా అధికారులు (గ్రూప్-1, గ్రూప్-2, సివిల్ సర్వీసెస్)."
+      },
+      "hi": {
+        "title": "सरकारी प्रशासनिक सेवाएं (Civil & State Services)",
+        "description": "यूपीएससी/राज्य लोक सेवा आयोग (APPSC) द्वारा चयनित प्रशासनिक अधिकारी जो सरकारी योजनाओं, राजस्व और जन कल्याण का प्रबंधन करते हैं।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000021",
+    "slug": "teacher-educator",
+    "name": "Teacher / Educator",
+    "category": "education",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹22,000 - ₹50,000 / month (Govt DSC / Private School)",
+    "training_duration": "2 Years (Professional B.Ed) + TET prep",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Bachelor Degree + B.Ed / D.El.Ed / D.Ed (TET / CTET qualified)",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Bachelor Degree + B.Ed / D.El.Ed / D.Ed (TET / CTET qualified)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Leadership",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Adaptability",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "education",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Teacher / Educator",
+        "description": "Educates school and college students, designs instructional lesson plans, and nurtures foundational literacy, numeracy, and character."
+      },
+      "te": {
+        "title": "ఉపాధ్యాయుడు / అధ్యాపకుడు (Teacher / Educator)",
+        "description": "పాఠశాల విద్యార్థులకు జ్ఞానాన్ని, క్రమశిక్షణను అందిస్తూ వారి బంగారు భవిష్యత్తుకు మార్గదర్శకంగా నిలిచే ఉపాధ్యాయ వృత్తి."
+      },
+      "hi": {
+        "title": "शिक्षक / अध्यापक (Teacher / Educator)",
+        "description": "छात्रों को विभिन्न विषयों में गुणवत्तापूर्ण शिक्षा प्रदान करता है, पाठ योजनाएं बनाता है और उनके सर्वांगीण विकास में मार्गदर्शन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000022",
+    "slug": "banking-professional",
+    "name": "Banking Professional",
+    "category": "business",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹32,000 - ₹62,000 / month (IBPS Clerk / PO starting basic pay + allowances)",
+    "training_duration": "6 to 12 Months (Competitive exam prep)",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Any Bachelor Degree from a recognized University",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Any Bachelor Degree from a recognized University",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Excel",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Analytical Thinking",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Decision Making",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "business",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Banking Professional (IBPS / SBI Clerk & PO)",
+        "description": "Manages financial transactions, customer loans, credit verification, savings accounts, and digital banking operations in commercial and rural banks."
+      },
+      "te": {
+        "title": "బ్యాంకింగ్ ఉద్యోగి (IBPS / SBI Clerk & PO)",
+        "description": "వాణిజ్య మరియు గ్రామీణ బ్యాంకులలో ఆర్థిక లావాదేవీలు, డిపాజిట్లు, వ్యవసాయ మరియు వ్యాపార రుణాల మంజూరును నిర్వహించే అధికారి."
+      },
+      "hi": {
+        "title": "बैंकिंग पेशेवर (IBPS / SBI बैंक अधिकारी व लिपिक)",
+        "description": "बैंकों में वित्तीय लेन-देन, ग्राहक ऋण, बचत खाते, फिक्स्ड डिपॉजिट और डिजिटल बैंकिंग सेवाओं का संचालन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000023",
+    "slug": "agriculture-extension-worker",
+    "name": "Agriculture Extension Worker",
+    "category": "modern_agriculture",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹18,000 - ₹35,000 / month (AP Rythu Bharosa Kendram / NGO)",
+    "training_duration": "2 Years Diploma / 4 Years Degree",
+    "required_education": "degree",
+    "eligibility_requirements": {
+      "min_education_level": "Diploma in Agriculture / B.Sc Agriculture / Horticulture",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: Diploma in Agriculture / B.Sc Agriculture / Horticulture",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Agriculture Fundamentals",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Communication",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Excel",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "modern_agriculture",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Agriculture Extension Worker / Village Agriculture Assistant",
+        "description": "Advises farmers at village level (such as Rythu Bharosa Kendras in AP) on crop selection, soil health, drip irrigation, pest remedies, and government subsidies."
+      },
+      "te": {
+        "title": "గ్రామ వ్యవసాయ సహాయకుడు (Village Agriculture Assistant)",
+        "description": "రైతు భరోసా కేంద్రాల (RBK) ద్వారా రైతులకు నాణ్యమైన విత్తనాలు, ఎరువులు, భూసార పరీక్షలు మరియు ప్రభుత్వ సబ్సిడీలను అందించే వ్యవసాయ సలహాదారు."
+      },
+      "hi": {
+        "title": "कृषि विस्तार कार्यकर्ता (Agriculture Extension Worker)",
+        "description": "किसानों को उन्नत बीज, मिट्टी परीक्षण, जैविक खाद, ड्रिप सिंचाई और सरकारी सब्सिडी योजनाओं के बारे में तकनीकी सलाह देता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000001",
+    "slug": "solar-technician",
+    "name": "Solar PV Technician",
+    "category": "renewable_energy",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹32,000 / month (Field EPC / PM Surya Ghar installer)",
+    "training_duration": "3 to 6 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th Pass + ITI (Electrician/Wireman) or Suryamitra Certified",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI (Electrician/Wireman) or Suryamitra Certified",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Solar Installation",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Electrical Wiring",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Electrical Fundamentals",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "renewable_energy",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Solar PV Technician",
+        "description": "Installs, tests, and maintains rooftop solar panels, grid-tied inverters, and storage batteries under schemes like PM Surya Ghar."
+      },
+      "te": {
+        "title": "సోలార్ పివి టెక్నీషియన్ (Solar PV Systems Technician)",
+        "description": "పీఎం సూర్య ఘర్ పథకం క్రింద ఇళ్లపై మరియు వ్యవసాయ పంపులకు సోలార్ ప్యానెల్స్, ఇన్వర్టర్లు మరియు బ్యాటరీలను అమర్చి నిర్వహించే సాంకేతిక నిపుణుడు."
+      },
+      "hi": {
+        "title": "सोलर पीवी सिस्टम तकनीशियन (Solar PV Technician)",
+        "description": "पीएम सूर्य घर और कुसुम योजना के तहत घरों और खेतों में सोलर पैनल, इन्वर्टर और ग्रिड कनेक्शन स्थापित और मरम्मत करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000024",
+    "slug": "electrician",
+    "name": "Electrician",
+    "category": "trades",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹16,000 - ₹30,000 / month (Domestic / DISCOM / Industrial)",
+    "training_duration": "2 Years ITI or 6 Months Vocational",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th Pass + ITI Electrician Trade Certificate",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI Electrician Trade Certificate",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Electrical Fundamentals",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "trades",
+      "technology",
+      "problem_solving"
+    ],
+    "translations": {
+      "en": {
+        "title": "Electrician",
+        "description": "Installs, inspects, and repairs electrical power cables, switchgear, domestic house wiring, transformers, and electrical appliances safely."
+      },
+      "te": {
+        "title": "ఎలక్ట్రీషియన్ (Electrician)",
+        "description": "ఇళ్లు, పరిశ్రమలు మరియు విద్యుత్ బోర్డులలో (DISCOM) వైరింగ్, మీటర్లు, మోటార్లు మరియు ఎలక్ట్రికల్ పరికరాలను సురక్షితంగా అమర్చే సాంకేతిక నిపుణుడు."
+      },
+      "hi": {
+        "title": "इलेक्ट्रीशियन (Electrician)",
+        "description": "घरों, दुकानों और कारखानों में बिजली की तारों, स्विचबोर्ड, मोटर, ट्रांसफार्मर और उपकरणों की सुरक्षित स्थापना और मरम्मत करता है।"
+      }
+    }
+  }
+]
