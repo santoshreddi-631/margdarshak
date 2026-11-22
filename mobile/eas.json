@@ -13,7 +13,8 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_BACKEND_URL": "https://YOUR-NODE-BACKEND.onrender.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://margdarshak-1-0cnx.onrender.com/api/v1",
+        "EXPO_PUBLIC_BACKEND_URL": "https://margdarshak-1-0cnx.onrender.com/api/v1"
       }
     },
     "production": {
@@ -21,7 +22,8 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_BACKEND_URL": "https://YOUR-NODE-BACKEND.onrender.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://margdarshak-1-0cnx.onrender.com/api/v1",
+        "EXPO_PUBLIC_BACKEND_URL": "https://margdarshak-1-0cnx.onrender.com/api/v1"
       }
     }
   },

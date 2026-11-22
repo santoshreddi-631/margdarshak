@@ -8,8 +8,9 @@ import { supabase, isSupabaseConfigured } from './supabase';
 // 2. Metro hostUri IP (enables seamless physical Android phone testing over Wi-Fi)
 // 3. Android emulator (10.0.2.2) or Web/iOS (localhost)
 const getBackendBaseUrl = (): string => {
-  if (process.env.EXPO_PUBLIC_API_URL) {
-    return process.env.EXPO_PUBLIC_API_URL;
+  const customUrl = process.env.EXPO_PUBLIC_API_URL || process.env.EXPO_PUBLIC_BACKEND_URL;
+  if (customUrl) {
+    return customUrl.endsWith('/api/v1') ? customUrl : `${customUrl.replace(/\/$/, '')}/api/v1`;
   }
   if (Platform.OS === 'web' && typeof window !== 'undefined' && window.location?.hostname) {
     return `http://${window.location.hostname}:5000/api/v1`;
