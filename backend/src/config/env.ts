@@ -10,7 +10,11 @@ const envSchema = z.object({
   SUPABASE_ANON_KEY: z.string().default(''),
   SUPABASE_SERVICE_ROLE_KEY: z.string().default(''),
   RECOMMENDATION_SERVICE_URL: z.string().default('http://localhost:8000'),
-  ALLOWED_ORIGINS: z.string().default('http://localhost:8081,http://localhost:19006,exp://localhost:8081,http://localhost:3000'),
+  ALLOWED_ORIGINS: z
+    .string()
+    .default(
+      'http://localhost:8081,http://localhost:19006,exp://localhost:8081,http://localhost:3000,https://margdarshak-webapp.vercel.app'
+    ),
 });
 
 const parsed = envSchema.safeParse(process.env);

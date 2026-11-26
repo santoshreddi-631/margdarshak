@@ -3,25 +3,31 @@ import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from './supabase';
 
+const PRODUCTION_BACKEND_URL = 'https://margdarshak-1-0cnx.onrender.com/api/v1';
+
 // Dynamically resolve backend host:
-// 1. Explicit EXPO_PUBLIC_API_URL if configured
-// 2. Metro hostUri IP (enables seamless physical Android phone testing over Wi-Fi)
-// 3. Android emulator (10.0.2.2) or Web/iOS (localhost)
+// 1. Explicit EXPO_PUBLIC_API_URL / EXPO_PUBLIC_BACKEND_URL if configured
+// 2. Local web dev host (localhost/127.0.0.1 -> :5000) or production Render URL for cloud web hosts (Vercel)
+// 3. Metro hostUri IP (enables seamless physical Android phone testing over Wi-Fi)
+// 4. Fallback to production Render API on native builds
 const getBackendBaseUrl = (): string => {
   const customUrl = process.env.EXPO_PUBLIC_API_URL || process.env.EXPO_PUBLIC_BACKEND_URL;
   if (customUrl) {
     return customUrl.endsWith('/api/v1') ? customUrl : `${customUrl.replace(/\/$/, '')}/api/v1`;
   }
   if (Platform.OS === 'web' && typeof window !== 'undefined' && window.location?.hostname) {
-    return `http://${window.location.hostname}:5000/api/v1`;
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return `http://${host}:5000/api/v1`;
+    }
+    return PRODUCTION_BACKEND_URL;
   }
   const hostUri = Constants.expoConfig?.hostUri;
   if (hostUri) {
     const ip = hostUri.split(':')[0];
     return `http://${ip}:5000/api/v1`;
   }
-  const defaultHost = Platform.OS === 'android' ? 'http://10.0.2.2:5000' : 'http://localhost:5000';
-  return `${defaultHost}/api/v1`;
+  return PRODUCTION_BACKEND_URL;
 };
 
 export const API_BASE_URL = getBackendBaseUrl();

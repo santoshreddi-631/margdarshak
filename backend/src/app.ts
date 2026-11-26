@@ -22,8 +22,17 @@ export const createApp = (): Application => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow mobile apps, curl, postman (where origin is undefined) or allowed hosts
-        if (!origin || env.ALLOWED_ORIGINS_ARRAY.includes(origin) || env.NODE_ENV === 'development') {
+        const isVercelDeployment = Boolean(
+          origin && /^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.vercel\.app$/i.test(origin)
+        );
+        // Allow mobile apps, curl, postman (no origin), Vercel web deployments, or explicitly allowed hosts
+        if (
+          !origin ||
+          env.ALLOWED_ORIGINS_ARRAY.includes('*') ||
+          env.ALLOWED_ORIGINS_ARRAY.includes(origin) ||
+          isVercelDeployment ||
+          env.NODE_ENV !== 'production'
+        ) {
           callback(null, true);
         } else {
           callback(new Error(`Origin ${origin} not allowed by CORS`));
