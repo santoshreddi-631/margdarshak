@@ -6,6 +6,16 @@ import { sendSuccess } from '../utils/response';
 import { UnauthorizedError } from '../utils/appError';
 
 export class RoadmapController {
+  async getRoadmaps(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    try {
+      const query = roadmapQuerySchema.parse(req.query);
+      const list = await roadmapService.getRoadmapsList(query.lang);
+      return sendSuccess(res, list, 'Roadmaps retrieved successfully');
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async getRoadmapByCareer(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       const query = roadmapQuerySchema.parse(req.query);

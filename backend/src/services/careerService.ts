@@ -49,7 +49,7 @@ export class CareerService {
   async getCareers(params: GetCareersParams) {
     const lang = params.lang || 'en';
     const page = params.page || 1;
-    const limit = params.limit || 20;
+    const limit = params.limit || 100;
     const offset = (page - 1) * limit;
 
     if (!isSupabaseConfigured()) {
@@ -57,6 +57,23 @@ export class CareerService {
     }
 
     const client = getAdminClient();
+
+    let resolvedCategoryId = params.category_id;
+    if (!resolvedCategoryId && params.category_code && params.category_code !== 'All' && params.category_code !== 'all') {
+      const { data: catRow } = await client
+        .from('career_categories')
+        .select('id')
+        .eq('code', params.category_code)
+        .maybeSingle();
+      if (catRow?.id) {
+        resolvedCategoryId = catRow.id;
+      } else {
+        return {
+          careers: [],
+          meta: { page, limit, total: 0, total_pages: 0 },
+        };
+      }
+    }
 
     let query = client
       .from('careers')
@@ -71,6 +88,10 @@ export class CareerService {
         training_duration,
         growth_demand,
         is_active,
+        verification_status,
+        source_url,
+        official_occupational_code,
+        last_verified_date,
         created_at,
         category:career_categories (
           id,
@@ -86,14 +107,26 @@ export class CareerService {
           description,
           job_responsibilities,
           pathway_summary
+        ),
+        career_skills (
+          skill_id,
+          importance,
+          skills (
+            id,
+            name,
+            name_hi,
+            name_te,
+            category,
+            description
+          )
         )
       `,
         { count: 'exact' }
       )
       .eq('is_active', true);
 
-    if (params.category_id) {
-      query = query.eq('category_id', params.category_id);
+    if (resolvedCategoryId) {
+      query = query.eq('category_id', resolvedCategoryId);
     }
 
     if (params.growth) {
@@ -108,7 +141,7 @@ export class CareerService {
       query = query.ilike('title', `%${params.search}%`);
     }
 
-    query = query.range(offset, offset + limit - 1).order('created_at', { ascending: false });
+    query = query.range(offset, offset + limit - 1).order('id', { ascending: true });
 
     const { data, count, error } = await query;
 
@@ -130,6 +163,20 @@ export class CareerService {
         (lang === 'te' && cat?.name_te) ||
         cat?.name;
 
+      const formattedSkills = (row.career_skills || [])
+        .filter((s: any) => s.skills)
+        .map((s: any) => ({
+          skill_id: s.skill_id,
+          importance: s.importance,
+          name:
+            (lang === 'hi' && s.skills?.name_hi) ||
+            (lang === 'te' && s.skills?.name_te) ||
+            s.skills?.name ||
+            '',
+          category: s.skills?.category || '',
+          description: s.skills?.description || null,
+        }));
+
       return {
         id: row.id,
         category_id: row.category_id,
@@ -140,6 +187,10 @@ export class CareerService {
         training_duration: row.training_duration,
         growth_demand: row.growth_demand,
         is_active: row.is_active,
+        verification_status: row.verification_status,
+        source_url: row.source_url,
+        official_occupational_code: row.official_occupational_code,
+        last_verified_date: row.last_verified_date,
         created_at: row.created_at,
         category: cat
           ? {
@@ -155,6 +206,7 @@ export class CareerService {
           job_responsibilities: targetTrans.job_responsibilities || '',
           pathway_summary: targetTrans.pathway_summary || '',
         },
+        skills: formattedSkills,
       };
     });
 
@@ -192,6 +244,10 @@ export class CareerService {
         training_duration,
         growth_demand,
         is_active,
+        verification_status,
+        source_url,
+        official_occupational_code,
+        last_verified_date,
         created_at,
         category:career_categories (
           id,
@@ -212,9 +268,14 @@ export class CareerService {
 
     if (isUuid) {
       careerQuery = careerQuery.eq('id', careerId);
+    } else if (careerId === 'c-1' || careerId === 'solar-technician') {
+      careerQuery = careerQuery.eq('id', 'a1000000-0000-0000-0000-000000000001');
+    } else if (careerId === 'c-2' || careerId === 'frontend-web-developer') {
+      careerQuery = careerQuery.eq('id', 'a1000000-0000-0000-0000-000000000006');
+    } else if (careerId === 'c-3') {
+      careerQuery = careerQuery.eq('id', 'a1000000-0000-0000-0000-000000000023');
     } else {
-      const slugVal = careerId === 'c-1' ? 'solar-pv-technician' : (careerId === 'c-2' ? 'frontend-web-developer' : careerId);
-      careerQuery = careerQuery.or(`slug.eq.${slugVal},id.eq.a1000000-0000-0000-0000-000000000001`);
+      careerQuery = careerQuery.eq('slug', careerId);
     }
 
     const { data: career, error } = await careerQuery.maybeSingle();
@@ -225,7 +286,7 @@ export class CareerService {
 
     const c: any = career;
 
-    // 2. Fetch associated skills
+    // 2. Fetch associated skills using resolved career UUID (c.id)
     const { data: skillsData, error: skillsError } = await client
       .from('career_skills')
       .select(`
@@ -234,21 +295,23 @@ export class CareerService {
         skills (
           id,
           name,
+          name_hi,
+          name_te,
           category,
           description
         )
       `)
-      .eq('career_id', careerId);
+      .eq('career_id', c.id);
 
     if (skillsError) {
       logger.warn('Error fetching skills for career:', skillsError);
     }
 
-    // 3. Fetch learning resources
+    // 3. Fetch learning resources using resolved career UUID (c.id)
     const { data: resourcesData, error: resError } = await client
       .from('learning_resources')
       .select('*')
-      .eq('career_id', careerId);
+      .eq('career_id', c.id);
 
     if (resError) {
       logger.warn('Error fetching resources for career:', resError);
@@ -269,7 +332,11 @@ export class CareerService {
     const formattedSkills = (skillsData || []).map((s: any) => ({
       skill_id: s.skill_id,
       importance: s.importance,
-      name: s.skills?.name || '',
+      name:
+        (lang === 'hi' && s.skills?.name_hi) ||
+        (lang === 'te' && s.skills?.name_te) ||
+        s.skills?.name ||
+        '',
       category: s.skills?.category || '',
       description: s.skills?.description || null,
     }));
@@ -282,6 +349,9 @@ export class CareerService {
       url: r.url,
       is_free: r.is_free,
       language: r.language,
+      verification_status: r.verification_status,
+      source_url: r.source_url,
+      last_verified_date: r.last_verified_date,
     }));
 
     return {
@@ -292,6 +362,10 @@ export class CareerService {
       estimated_salary_range: c.estimated_salary_range,
       training_duration: c.training_duration,
       growth_demand: c.growth_demand,
+      verification_status: c.verification_status,
+      source_url: c.source_url,
+      official_occupational_code: c.official_occupational_code,
+      last_verified_date: c.last_verified_date,
       category: {
         id: cat?.id,
         code: cat?.code,

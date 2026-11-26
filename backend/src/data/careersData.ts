@@ -1,3 +1,5 @@
+import { EXPANDED_CAREERS } from './expandedCatalogData';
+
 export interface CareerSeedItem {
   id: string;
   category_id: string;
@@ -880,3 +882,6 @@ export const CAREERS_DATA: CareerSeedItem[] = [
     ],
   },
 ];
+
+CAREERS_DATA.push(...EXPANDED_CAREERS);
+

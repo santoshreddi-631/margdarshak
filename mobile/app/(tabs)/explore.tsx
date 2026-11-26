@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   useWindowDimensions,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
   Search,
@@ -29,60 +29,56 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuth } from '@/context/AuthContext';
 import {
   fetchCareers,
+  fetchCareerCategories,
   fetchSavedCareers,
   toggleSaveCareer,
   type ApiCareer,
+  type ApiCareerCategory,
 } from '@/services/api';
-
-const CATEGORIES = [
-  'All',
-  'trades',
-  'technical',
-  'agriculture',
-  'healthcare',
-  'digital',
-];
-
-const CATEGORY_LABELS: Record<string, string> = {
-  All: 'All Domains',
-  trades: 'Trades & Energy',
-  technical: 'Tech & Hardware',
-  agriculture: 'Modern Agriculture',
-  healthcare: 'Healthcare',
-  digital: 'Digital & Documentation',
-};
 
 const CATEGORY_CODE_ALIASES: Record<string, string[]> = {
   trades: ['trades', 'trades_electrical', 'renewable_energy', 'automotive'],
   technical: ['technical', 'digital_tech', 'trades_electrical', 'automotive'],
   agriculture: ['agriculture', 'modern_agriculture', 'agri_tech'],
+  modern_agriculture: ['modern_agriculture', 'agriculture', 'agri_tech'],
   healthcare: ['healthcare', 'healthcare_support'],
   digital: ['digital', 'digital_services', 'digital_tech'],
+  digital_services: ['digital_services', 'digital', 'digital_tech'],
 };
 
 export default function ExploreScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ category?: string }>();
   const { language } = useAuth();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(params.category || 'All');
+  const [categories, setCategories] = useState<ApiCareerCategory[]>([]);
   const [careers, setCareers] = useState<ApiCareer[]>([]);
   const [savedCareerIds, setSavedCareerIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (params.category && typeof params.category === 'string') {
+      setSelectedCategory(params.category);
+    }
+  }, [params.category]);
+
+  useEffect(() => {
     async function loadData() {
       setLoading(true);
       try {
-        const [list, saved] = await Promise.all([
+        const [list, saved, cats] = await Promise.all([
           fetchCareers(language),
           fetchSavedCareers(language),
+          fetchCareerCategories(language),
         ]);
         setCareers(list);
         setSavedCareerIds(saved);
+        setCategories(cats);
       } catch (_e) {
       } finally {
         setLoading(false);
@@ -90,6 +86,13 @@ export default function ExploreScreen() {
     }
     loadData();
   }, [language]);
+
+  const categoryPills = useMemo(() => {
+    return [
+      { code: 'All', name: t('opportunities.all') || 'All Domains' },
+      ...categories.map((c) => ({ code: c.code, name: c.name })),
+    ];
+  }, [categories, t]);
 
   const handleToggleSave = async (careerId: string, e: any) => {
     e.stopPropagation?.();
@@ -110,10 +113,13 @@ export default function ExploreScreen() {
         (career.translation?.description || '').toLowerCase().includes(q) ||
         (career.skills || []).some((s) => s.name.toLowerCase().includes(q));
 
-      const categoryCode = career.category?.code || '';
+      const categoryCode = (career.category?.code || '').toLowerCase();
+      const selectedLower = selectedCategory.toLowerCase();
+      const aliases = CATEGORY_CODE_ALIASES[selectedLower] || [selectedLower];
       const matchesCat =
         selectedCategory === 'All' ||
-        (CATEGORY_CODE_ALIASES[selectedCategory] || []).includes(categoryCode.toLowerCase());
+        categoryCode === selectedLower ||
+        aliases.includes(categoryCode);
 
       return matchesSearch && matchesCat;
     });
@@ -144,18 +150,18 @@ export default function ExploreScreen() {
           />
         </View>
 
-        {/* Filter Pills Carousel (Image 1 Style: active is dark #222222) */}
+        {/* Filter Pills Carousel (All 10 DB Domains) */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.pillsScroll}
         >
-          {CATEGORIES.map((cat) => {
-            const isSelected = selectedCategory === cat;
+          {categoryPills.map((cat) => {
+            const isSelected = selectedCategory.toLowerCase() === cat.code.toLowerCase();
             return (
               <Pressable
-                key={cat}
-                onPress={() => setSelectedCategory(cat)}
+                key={cat.code}
+                onPress={() => setSelectedCategory(cat.code)}
                 style={({ pressed }) => [
                   styles.filterPill,
                   isSelected && styles.filterPillActive,
@@ -168,7 +174,7 @@ export default function ExploreScreen() {
                     isSelected && styles.filterPillTextActive,
                   ]}
                 >
-                  {CATEGORY_LABELS[cat] || cat}
+                  {cat.name}
                 </Text>
               </Pressable>
             );
@@ -203,7 +209,11 @@ export default function ExploreScreen() {
             {filteredCareers.map((career) => {
               const isSaved = savedCareerIds.includes(career.id);
               const wageDisplay = career.estimated_salary_range || '₹18,000 - ₹35,000/mo';
-              const categoryLabel = career.category?.name || (career.category?.code ? CATEGORY_LABELS[career.category.code] : 'Career');
+              const categoryLabel =
+                career.category?.name ||
+                (career.category?.code
+                  ? career.category.code.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+                  : 'Career');
 
               return (
                 <Card

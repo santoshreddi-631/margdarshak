@@ -231,11 +231,130 @@ export interface ApiOpportunity {
 // Career Catalog API
 // ----------------------------------------------------
 
-export async function fetchCareers(lang = 'en', categoryId?: string, search?: string): Promise<ApiCareer[]> {
+export interface ApiCareerCategory {
+  id: string;
+  code: string;
+  name: string;
+  icon_name?: string;
+  display_order?: number;
+}
+
+export interface ApiJobPortal {
+  id: string;
+  name: string;
+  url: string;
+  portal_type: 'government' | 'private' | 'hybrid' | 'apprenticeship' | 'skilling' | string;
+  description: string;
+  target_users: string;
+  opportunity_categories: string[];
+  geographic_coverage: string;
+  application_method: string;
+  language_availability: string[];
+  verification_status: string;
+  last_checked_date: string;
+}
+
+export async function fetchCareerCategories(lang = 'en'): Promise<ApiCareerCategory[]> {
+  try {
+    const url = new URL(`${API_BASE_URL}/careers/categories`);
+    url.searchParams.set('lang', lang);
+    const res = await fetch(url.toString(), { headers: await getAuthHeader() });
+    const data = await res.json();
+    if (res.ok && data?.success && Array.isArray(data.data)) {
+      return data.data;
+    }
+  } catch {
+    // offline fallback below
+  }
+  return [
+    { id: 'c1000000-0000-0000-0000-000000000001', code: 'renewable_energy', name: 'Renewable Energy & Clean Tech', display_order: 1 },
+    { id: 'c1000000-0000-0000-0000-000000000002', code: 'modern_agriculture', name: 'Modern Agriculture & Agri-Tech', display_order: 2 },
+    { id: 'c1000000-0000-0000-0000-000000000003', code: 'automotive', name: 'Automotive & Electric Vehicles', display_order: 3 },
+    { id: 'c1000000-0000-0000-0000-000000000004', code: 'healthcare', name: 'Healthcare & Wellness', display_order: 4 },
+    { id: 'c1000000-0000-0000-0000-000000000005', code: 'digital_services', name: 'Digital Services & CSC', display_order: 5 },
+    { id: 'c1000000-0000-0000-0000-000000000006', code: 'technical', name: 'Software & Technology', display_order: 6 },
+    { id: 'c1000000-0000-0000-0000-000000000007', code: 'business', name: 'Business, Finance & Banking', display_order: 7 },
+    { id: 'c1000000-0000-0000-0000-000000000008', code: 'government_services', name: 'Government & Public Services', display_order: 8 },
+    { id: 'c1000000-0000-0000-0000-000000000009', code: 'education', name: 'Education & Teaching', display_order: 9 },
+    { id: 'c1000000-0000-0000-0000-000000000010', code: 'trades', name: 'Electrical & Industrial Trades', display_order: 10 },
+  ];
+}
+
+export async function fetchJobPortals(portalType?: string, lang = 'en'): Promise<ApiJobPortal[]> {
+  try {
+    const url = new URL(`${API_BASE_URL}/opportunities/portals`);
+    url.searchParams.set('lang', lang);
+    if (portalType && portalType !== 'all') {
+      url.searchParams.set('portal_type', portalType);
+    }
+    const res = await fetch(url.toString(), { headers: await getAuthHeader() });
+    const data = await res.json();
+    if (res.ok && data?.success && Array.isArray(data.data)) {
+      return data.data;
+    }
+  } catch {
+    // offline fallback below
+  }
+  return [
+    {
+      id: 'f3000000-0000-0000-0000-000000000001',
+      name: 'National Career Service (NCS)',
+      url: 'https://www.ncs.gov.in',
+      portal_type: 'government',
+      description: 'Ministry of Labour & Employment national job matching portal across India.',
+      target_users: 'All jobseekers, 10th/12th/ITI/Graduates',
+      opportunity_categories: ['jobs', 'career_counseling', 'skill_providers'],
+      geographic_coverage: 'Pan-India',
+      application_method: 'Online Portal',
+      language_availability: ['en', 'hi'],
+      verification_status: 'OFFICIAL_VERIFIED',
+      last_checked_date: '2026-11-26',
+    },
+    {
+      id: 'f3000000-0000-0000-0000-000000000013',
+      name: 'PM Internship Scheme Portal (MCA)',
+      url: 'https://pminternship.mca.gov.in',
+      portal_type: 'apprenticeship',
+      description: 'Paid 12-month central government internships across top 500 Indian companies (₹5,000/month).',
+      target_users: '10th, 12th, ITI, Diploma & Graduate youth aged 21-24',
+      opportunity_categories: ['paid_internships', 'govt_stipend'],
+      geographic_coverage: 'Pan-India',
+      application_method: 'Aadhaar eKYC & Online Profile',
+      language_availability: ['en', 'hi', 'te'],
+      verification_status: 'OFFICIAL_VERIFIED',
+      last_checked_date: '2026-11-26',
+    },
+    {
+      id: 'f3000000-0000-0000-0000-000000000011',
+      name: 'Apprenticeship India (NAPS Portal)',
+      url: 'https://www.apprenticeshipindia.gov.in',
+      portal_type: 'apprenticeship',
+      description: 'Official MSDE portal for paid on-the-job apprenticeships with DBT stipend.',
+      target_users: '10th/12th Pass, ITI & Polytechnic students',
+      opportunity_categories: ['apprenticeships', 'naps_subsidized'],
+      geographic_coverage: 'Pan-India',
+      application_method: 'Candidate Aadhaar eKYC',
+      language_availability: ['en', 'hi'],
+      verification_status: 'OFFICIAL_VERIFIED',
+      last_checked_date: '2026-11-26',
+    },
+  ];
+}
+
+export async function fetchCareers(
+  lang = 'en',
+  categoryId?: string,
+  search?: string,
+  categoryCode?: string
+): Promise<ApiCareer[]> {
   try {
     const url = new URL(`${API_BASE_URL}/careers`);
     url.searchParams.set('lang', lang);
+    url.searchParams.set('limit', '100');
     if (categoryId && categoryId !== 'All') url.searchParams.set('category_id', categoryId);
+    if (categoryCode && categoryCode !== 'All' && categoryCode !== 'all') {
+      url.searchParams.set('category_code', categoryCode);
+    }
     if (search) url.searchParams.set('search', search);
 
     const res = await fetch(url.toString(), {
@@ -286,9 +405,9 @@ export async function fetchCareerRoadmap(careerId: string, lang = 'en'): Promise
       const data = await res.json();
       if (data.data) {
         roadmap = data.data;
-        // Cache roadmap locally
+        // Cache roadmap locally per language
         await AsyncStorage.setItem(
-          `${STORAGE_KEYS.CACHED_ROADMAPS}_${careerId}`,
+          `${STORAGE_KEYS.CACHED_ROADMAPS}_${careerId}_${lang}`,
           JSON.stringify(data.data)
         );
       }
@@ -298,7 +417,7 @@ export async function fetchCareerRoadmap(careerId: string, lang = 'en'): Promise
   }
 
   if (!roadmap) {
-    const cached = await AsyncStorage.getItem(`${STORAGE_KEYS.CACHED_ROADMAPS}_${careerId}`);
+    const cached = await AsyncStorage.getItem(`${STORAGE_KEYS.CACHED_ROADMAPS}_${careerId}_${lang}`);
     if (cached) {
       roadmap = JSON.parse(cached);
     } else {

@@ -1,3 +1,5 @@
+import { EXPANDED_ROADMAPS_DATA } from './expandedRoadmapsData';
+
 export interface RoadmapStepSeedItem {
   id: string;
   step_number: number;
@@ -1440,5 +1442,8 @@ export const ROADMAPS_DATA: RoadmapSeedItem[] = [
     ],
   },
 ];
+
+ROADMAPS_DATA.push(...EXPANDED_ROADMAPS_DATA);
+
 
 

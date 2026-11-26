@@ -85,7 +85,7 @@ def test_post_recommendations_with_filter_ineligible():
         assert rec["education_eligibility"]["is_eligible"] is True
 
     # With filter_ineligible=false, careers are returned with ineligible penalized
-    res_unfiltered = client.post("/api/v1/recommendations?limit=10&filter_ineligible=false", json=payload)
+    res_unfiltered = client.post("/api/v1/recommendations?limit=20&filter_ineligible=false", json=payload)
     assert res_unfiltered.status_code == 200
     data_unfiltered = res_unfiltered.json()
     assert any(rec["education_eligibility"]["is_eligible"] is False for rec in data_unfiltered["recommendations"])

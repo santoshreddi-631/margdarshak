@@ -34,11 +34,13 @@ import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/context/AuthContext';
 import {
   fetchCareerDetails,
+  fetchCareerRoadmap,
   fetchSavedCareers,
   toggleSaveCareer,
   fetchBookmarkedResources,
   toggleBookmarkResource,
   type ApiCareer,
+  type ApiRoadmap,
 } from '@/services/api';
 
 export default function CareerDetailsScreen() {
@@ -48,6 +50,7 @@ export default function CareerDetailsScreen() {
   const { t } = useTranslation();
 
   const [career, setCareer] = useState<ApiCareer | null>(null);
+  const [roadmap, setRoadmap] = useState<ApiRoadmap | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [bookmarkedUrls, setBookmarkedUrls] = useState<string[]>([]);
@@ -58,12 +61,14 @@ export default function CareerDetailsScreen() {
       if (!id) return;
       setLoading(true);
       try {
-        const [details, savedIds, bookmarked] = await Promise.all([
+        const [details, roadmapData, savedIds, bookmarked] = await Promise.all([
           fetchCareerDetails(id, language),
+          fetchCareerRoadmap(id, language).catch(() => null),
           fetchSavedCareers(language),
           fetchBookmarkedResources(),
         ]);
         setCareer(details);
+        setRoadmap(roadmapData);
         setIsSaved(savedIds.includes(id) || (details ? savedIds.includes(details.id) : false));
         setBookmarkedUrls(bookmarked);
       } catch (_e) {
@@ -222,16 +227,18 @@ export default function CareerDetailsScreen() {
             <Text style={styles.sectionHeading}>{t('careerDetails.whyFitsYou')}</Text>
           </View>
           <Text style={styles.suitabilityText}>
-            Matches practical hands-on preference and regional hiring requirements in your state.
-            Eligible with {career.minimum_education}. Certified programs provide placement support under Government PMKVY 4.0 / NAPS.
+            {career.translation?.pathway_summary ||
+              `Eligible with ${career.minimum_education}. Training duration is ${career.training_duration} with verified public/industry pathways.`}
           </Text>
           <View style={styles.suitabilityCheckRow}>
             <CheckCircle2 size={16} color={Colors.success} />
-            <Text style={styles.checkText}>Fully recognized government certification pathway</Text>
+            <Text style={styles.checkText}>
+              {(career as any).official_occupational_code || 'Verified occupational career pathway'}
+            </Text>
           </View>
           <View style={styles.suitabilityCheckRow}>
             <CheckCircle2 size={16} color={Colors.success} />
-            <Text style={styles.checkText}>Stipend eligibility during on-the-job apprenticeship</Text>
+            <Text style={styles.checkText}>Apprenticeship & government scheme support available</Text>
           </View>
         </Card>
 
@@ -273,7 +280,7 @@ export default function CareerDetailsScreen() {
           </View>
         </View>
 
-        {/* Career Pathways */}
+        {/* Career Pathways (Dynamic DB Roadmap Stages) */}
         <View style={styles.section}>
           <View style={styles.sectionHeaderRow}>
             <Route size={18} color={Colors.primary} />
@@ -281,39 +288,56 @@ export default function CareerDetailsScreen() {
           </View>
 
           <Card variant="elevated" style={styles.progressionCard}>
-            <View style={styles.progressionStep}>
-              <View style={styles.stepNumBadge}>
-                <Text style={styles.stepNumText}>1</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.progressionRole}>Trainee / Apprentice</Text>
-                <Text style={styles.progressionSub}>3-6 Months certified skilling & stipend</Text>
-              </View>
-            </View>
-
-            <View style={styles.progressionDivider} />
-
-            <View style={styles.progressionStep}>
-              <View style={[styles.stepNumBadge, { backgroundColor: Colors.primary }]}>
-                <Text style={[styles.stepNumText, { color: '#FFFFFF' }]}>2</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.progressionRole}>Certified Technician / Specialist</Text>
-                <Text style={styles.progressionSub}>1-2 Years direct on-field commercial experience</Text>
-              </View>
-            </View>
-
-            <View style={styles.progressionDivider} />
-
-            <View style={styles.progressionStep}>
-              <View style={[styles.stepNumBadge, { backgroundColor: Colors.surface, borderWidth: 1.5, borderColor: Colors.primary }]}>
-                <Text style={[styles.stepNumText, { color: Colors.primary }]}>3</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.progressionRole}>Team Supervisor or Micro-Entrepreneur</Text>
-                <Text style={styles.progressionSub}>Own servicing enterprise with MUDRA bank loan</Text>
-              </View>
-            </View>
+            {(roadmap?.steps && roadmap.steps.length > 0
+              ? roadmap.steps
+              : [
+                  {
+                    id: 'fallback-1',
+                    step_number: 1,
+                    title: 'Foundational Training & Eligibility',
+                    estimated_duration: career.training_duration || '3-6 Months',
+                  },
+                  {
+                    id: 'fallback-2',
+                    step_number: 2,
+                    title: 'Practical Skilling & Certification',
+                    estimated_duration: career.estimated_salary_range || 'Entry Pathway',
+                  },
+                ]
+            ).map((step, idx, arr) => (
+              <React.Fragment key={step.id}>
+                <View style={styles.progressionStep}>
+                  <View
+                    style={[
+                      styles.stepNumBadge,
+                      idx === 1 && { backgroundColor: Colors.primary },
+                      idx >= 2 && {
+                        backgroundColor: Colors.surface,
+                        borderWidth: 1.5,
+                        borderColor: Colors.primary,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.stepNumText,
+                        idx === 1 && { color: '#FFFFFF' },
+                        idx >= 2 && { color: Colors.primary },
+                      ]}
+                    >
+                      {step.step_number || idx + 1}
+                    </Text>
+                  </View>
+                  <View style={styles.stepContent}>
+                    <Text style={styles.progressionRole}>{step.title}</Text>
+                    <Text style={styles.progressionSub}>
+                      {step.estimated_duration || career.training_duration}
+                    </Text>
+                  </View>
+                </View>
+                {idx < arr.length - 1 && <View style={styles.progressionDivider} />}
+              </React.Fragment>
+            ))}
           </Card>
         </View>
 

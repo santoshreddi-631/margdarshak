@@ -1,3 +1,5 @@
+import { EXPANDED_JOB_PORTALS } from './expandedCatalogData';
+
 export interface JobPortalRecord {
   id: string;
   name: string;
@@ -209,3 +211,6 @@ export const JOB_PORTALS: JobPortalRecord[] = [
     last_checked_date: '2026-11-22',
   },
 ];
+
+JOB_PORTALS.push(...(EXPANDED_JOB_PORTALS as JobPortalRecord[]));
+

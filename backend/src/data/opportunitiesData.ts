@@ -1,3 +1,5 @@
+import { EXPANDED_OPPORTUNITIES } from './expandedCatalogData';
+
 export interface OpportunityRecord {
   id: string;
   title: string;
@@ -241,3 +243,6 @@ export const OPPORTUNITIES: OpportunityRecord[] = [
     last_verified_date: '2026-11-22',
   },
 ];
+
+OPPORTUNITIES.push(...(EXPANDED_OPPORTUNITIES as OpportunityRecord[]));
+

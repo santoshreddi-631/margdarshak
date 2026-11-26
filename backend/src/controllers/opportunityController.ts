@@ -15,6 +15,17 @@ export class OpportunityController {
     }
   }
 
+  async getPortals(req: Request, res: Response, next: NextFunction) {
+    try {
+      const portalType = (req.query.portal_type || req.query.type) as string | undefined;
+      const lang = (req.query.lang as LanguageCode) || 'en';
+      const portals = await opportunityService.getPortals(portalType, lang);
+      return sendSuccess(res, portals, 'Job & internship portals retrieved successfully');
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async getOpportunityById(req: Request, res: Response, next: NextFunction) {
     try {
       const lang = (req.query.lang as LanguageCode) || 'en';

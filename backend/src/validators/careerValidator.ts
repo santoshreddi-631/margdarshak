@@ -8,7 +8,7 @@ export const careerQuerySchema = z.object({
   growth: z.enum(['high', 'steady', 'emerging']).optional(),
   education: z.string().optional(),
   page: z.string().optional().transform((v) => (v ? Math.max(1, parseInt(v, 10)) : 1)),
-  limit: z.string().optional().transform((v) => (v ? Math.min(50, Math.max(1, parseInt(v, 10))) : 20)),
+  limit: z.string().optional().transform((v) => (v ? Math.min(200, Math.max(1, parseInt(v, 10))) : 100)),
 });
 
 export const careerDetailQuerySchema = z.object({

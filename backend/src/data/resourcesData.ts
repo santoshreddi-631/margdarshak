@@ -1,3 +1,5 @@
+import { EXPANDED_LEARNING_RESOURCES } from './expandedCatalogData';
+
 export interface LearningResourceRecord {
   id: string;
   career_id?: string;
@@ -367,3 +369,24 @@ export const LEARNING_RESOURCES: LearningResourceRecord[] = [
     last_verified_date: '2026-11-22',
   },
 ];
+
+LEARNING_RESOURCES.push(
+  ...EXPANDED_LEARNING_RESOURCES.map(
+    (r): LearningResourceRecord => ({
+      id: r.id,
+      career_id: r.career_id,
+      title: r.title,
+      title_hi: r.title_hi,
+      title_te: r.title_te,
+      resource_type: r.resource_type as LearningResourceRecord['resource_type'],
+      provider_name: r.provider_name,
+      url: r.url,
+      is_free: r.is_free,
+      language: r.language,
+      verification_status: 'OFFICIAL_VERIFIED',
+      source_url: r.url,
+      last_verified_date: '2026-11-26',
+    })
+  )
+);
+

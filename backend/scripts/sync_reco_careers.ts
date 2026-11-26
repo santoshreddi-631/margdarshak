@@ -1,128 +1,119 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { CAREERS_DATA } from './data/careersData';
+import { getAdminClient } from '../src/config/supabase';
 
-const SKILL_NAME_BY_LEGACY_ID: Record<string, string> = {
-  'b1000000-0000-0000-0000-000000000001': 'HTML',
-  'b1000000-0000-0000-0000-000000000002': 'CSS',
-  'b1000000-0000-0000-0000-000000000003': 'JavaScript',
-  'b1000000-0000-0000-0000-000000000004': 'TypeScript',
-  'b1000000-0000-0000-0000-000000000005': 'React',
-  'b1000000-0000-0000-0000-000000000006': 'React Native',
-  'b1000000-0000-0000-0000-000000000007': 'Node.js',
-  'b1000000-0000-0000-0000-000000000008': 'Express.js',
-  'b1000000-0000-0000-0000-000000000009': 'Python',
-  'b1000000-0000-0000-0000-000000000010': 'Java',
-  'b1000000-0000-0000-0000-000000000011': 'C',
-  'b1000000-0000-0000-0000-000000000012': 'C++',
-  'b1000000-0000-0000-0000-000000000013': 'SQL',
-  'b1000000-0000-0000-0000-000000000014': 'PostgreSQL',
-  'b1000000-0000-0000-0000-000000000015': 'Excel',
-  'b1000000-0000-0000-0000-000000000016': 'Data Analysis',
-  'b1000000-0000-0000-0000-000000000017': 'Statistics',
-  'b1000000-0000-0000-0000-000000000018': 'Networking',
-  'b1000000-0000-0000-0000-000000000019': 'Linux',
-  'b1000000-0000-0000-0000-000000000020': 'Cybersecurity Fundamentals',
-  'b1000000-0000-0000-0000-000000000021': 'Cloud Computing',
-  'b1000000-0000-0000-0000-000000000022': 'Git',
-  'b1000000-0000-0000-0000-000000000023': 'UI/UX Design',
-  'b1000000-0000-0000-0000-000000000024': 'Figma',
-  'b1000000-0000-0000-0000-000000000025': 'Digital Marketing',
-  'b1000000-0000-0000-0000-000000000026': 'SEO',
-  'b1000000-0000-0000-0000-000000000027': 'Accounting',
-  'b1000000-0000-0000-0000-000000000028': 'Electrical Fundamentals',
-  'b1000000-0000-0000-0000-000000000029': 'Solar Installation',
-  'b1000000-0000-0000-0000-000000000030': 'Agriculture Fundamentals',
-  'b1000000-0000-0000-0000-000000000031': 'Communication',
-  'b1000000-0000-0000-0000-000000000032': 'Problem Solving',
-  'b1000000-0000-0000-0000-000000000033': 'Critical Thinking',
-  'b1000000-0000-0000-0000-000000000034': 'Creativity',
-  'b1000000-0000-0000-0000-000000000035': 'Leadership',
-  'b1000000-0000-0000-0000-000000000036': 'Teamwork',
-  'b1000000-0000-0000-0000-000000000037': 'Time Management',
-  'b1000000-0000-0000-0000-000000000038': 'Adaptability',
-  'b1000000-0000-0000-0000-000000000039': 'Analytical Thinking',
-  'b1000000-0000-0000-0000-000000000040': 'Decision Making',
+const INTERESTS_BY_CATEGORY: Record<string, string[]> = {
+  renewable_energy: ['renewable_energy', 'electronics', 'technology'],
+  modern_agriculture: ['agriculture', 'science', 'entrepreneurship'],
+  automotive: ['electronics', 'technology', 'trades'],
+  healthcare: ['healthcare', 'science', 'social_work'],
+  digital_services: ['technology', 'entrepreneurship', 'social_work'],
+  technical: ['technology', 'programming', 'electronics'],
+  business: ['business', 'finance', 'entrepreneurship'],
+  government_services: ['government_services', 'social_work', 'business'],
+  education: ['education', 'social_work', 'creativity'],
+  trades: ['trades', 'electronics', 'technology'],
 };
 
-const CATEGORY_CODE_MAP: Record<string, string> = {
-  'c1000000-0000-0000-0000-000000000001': 'renewable_energy',
-  'c1000000-0000-0000-0000-000000000002': 'modern_agriculture',
-  'c1000000-0000-0000-0000-000000000003': 'automotive',
-  'c1000000-0000-0000-0000-000000000004': 'healthcare',
-  'c1000000-0000-0000-0000-000000000005': 'digital_services',
-  'c1000000-0000-0000-0000-000000000006': 'technical',
-  'c1000000-0000-0000-0000-000000000007': 'business',
-  'c1000000-0000-0000-0000-000000000008': 'government_services',
-  'c1000000-0000-0000-0000-000000000009': 'education',
-  'c1000000-0000-0000-0000-000000000010': 'trades',
-};
+function inferRequiredEducation(minEdu: string): '10th_standard' | '12th_standard' | 'degree' {
+  const lower = (minEdu || '').toLowerCase();
+  if (lower.includes('8th') || lower.includes('10th')) return '10th_standard';
+  if (lower.includes('12th')) return '12th_standard';
+  if (lower.includes('bachelor') || lower.includes('degree') || lower.includes('b.tech') || lower.includes('b.sc')) {
+    return 'degree';
+  }
+  return '12th_standard';
+}
 
-const formatted = CAREERS_DATA.map((c) => {
-  const reqSkills = c.skills
-    .filter((s) => s.importance === 'required')
-    .map((s) => ({
-      name: SKILL_NAME_BY_LEGACY_ID[s.skill_id] || 'Core Skill',
-      importance: 'required',
-      weight: 1.0,
-    }));
+async function syncRecoCareers() {
+  const targetPath = path.resolve(__dirname, '../../recommendation-service/app/data/careers.json');
+  const existingRaw = fs.existsSync(targetPath) ? JSON.parse(fs.readFileSync(targetPath, 'utf-8')) : [];
+  const existingById = new Map<string, any>();
+  for (const item of existingRaw) {
+    existingById.set(item.id, item);
+  }
 
-  const recSkills = c.skills
-    .filter((s) => s.importance !== 'required')
-    .map((s) => ({
-      name: SKILL_NAME_BY_LEGACY_ID[s.skill_id] || 'Advantage Skill',
-      importance: 'recommended',
-      weight: 0.6,
-    }));
+  const client = getAdminClient();
+  const { data: dbCareers, error } = await client
+    .from('careers')
+    .select(
+      `
+      id,
+      slug,
+      title,
+      minimum_education,
+      estimated_salary_range,
+      training_duration,
+      growth_demand,
+      career_categories ( code ),
+      career_translations ( language_code, title, description ),
+      career_skills ( importance, skills ( name ) )
+    `
+    )
+    .eq('is_active', true)
+    .order('id');
 
-  const catCode = CATEGORY_CODE_MAP[c.category_id] || 'technical';
+  if (error || !dbCareers) {
+    throw new Error(`Failed to fetch careers from Supabase: ${error?.message}`);
+  }
 
-  return {
-    id: c.id,
-    slug: c.slug,
-    name: c.title,
-    category: catCode,
-    growth_demand: c.growth_demand,
-    estimated_salary_range: c.estimated_salary_range,
-    training_duration: c.training_duration,
-    required_education: c.minimum_education.toLowerCase().includes('10th')
-      ? '10th_standard'
-      : c.minimum_education.toLowerCase().includes('12th')
-      ? '12th_standard'
-      : c.minimum_education.toLowerCase().includes('iti')
-      ? 'iti'
-      : 'degree',
-    eligibility_requirements: {
-      min_education_level: c.minimum_education,
-      allowed_streams: ['any'],
-      mandatory_rules: [
-        `Must meet minimum eligibility: ${c.minimum_education}`,
-        'Valid verification document or trade certification where required',
-      ],
-      preferred_qualifications: [
-        'Prior hands-on vocational interest or relevant coursework',
-      ],
-    },
-    required_skills: reqSkills,
-    recommended_skills: recSkills,
-    matching_interests: [catCode, 'technology', 'problem_solving'],
-    translations: {
-      en: {
-        title: c.translations.en.title,
-        description: c.translations.en.description,
+  const merged: any[] = [...existingRaw];
+  for (const c of dbCareers as any[]) {
+    if (existingById.has(c.id)) continue;
+
+    const catCode = c.career_categories?.code || 'trades';
+    const reqEdu = inferRequiredEducation(c.minimum_education);
+    const translationsMap: Record<string, { title: string; description: string }> = {};
+    for (const tr of c.career_translations || []) {
+      translationsMap[tr.language_code] = {
+        title: tr.title,
+        description: tr.description,
+      };
+    }
+
+    const reqSkills = (c.career_skills || [])
+      .filter((s: any) => s.importance === 'required' && s.skills?.name)
+      .map((s: any) => ({ name: s.skills.name, importance: 'required', weight: 1.0 }));
+    const recSkills = (c.career_skills || [])
+      .filter((s: any) => s.importance !== 'required' && s.skills?.name)
+      .map((s: any) => ({ name: s.skills.name, importance: 'recommended', weight: 0.6 }));
+
+    merged.push({
+      id: c.id,
+      slug: c.slug,
+      name: c.title,
+      category: catCode,
+      growth_demand: c.growth_demand || 'steady',
+      estimated_salary_range: c.estimated_salary_range,
+      training_duration: c.training_duration,
+      required_education: reqEdu,
+      eligibility_requirements: {
+        min_education_level: reqEdu,
+        allowed_streams: ['any'],
+        mandatory_rules: [
+          `Must meet minimum eligibility: ${c.minimum_education}`,
+          'Valid verification document or trade certification where required',
+        ],
+        preferred_qualifications: ['Prior hands-on vocational interest or relevant coursework'],
       },
-      te: {
-        title: c.translations.te.title,
-        description: c.translations.te.description,
+      required_skills: reqSkills,
+      recommended_skills: recSkills,
+      matching_interests: INTERESTS_BY_CATEGORY[catCode] || [catCode, 'technology'],
+      translations: {
+        en: translationsMap.en || { title: c.title, description: '' },
+        te: translationsMap.te || translationsMap.en || { title: c.title, description: '' },
+        hi: translationsMap.hi || translationsMap.en || { title: c.title, description: '' },
       },
-      hi: {
-        title: c.translations.hi.title,
-        description: c.translations.hi.description,
-      },
-    },
-  };
-});
+    });
+  }
 
-const targetPath = path.resolve(__dirname, '../../recommendation-service/app/data/careers.json');
-fs.writeFileSync(targetPath, JSON.stringify(formatted, null, 2), 'utf-8');
-console.log(`[OK] Successfully synchronized ${formatted.length} careers to ${targetPath}`);
+  fs.writeFileSync(targetPath, JSON.stringify(merged, null, 2), 'utf-8');
+  console.log(`[OK] Synchronized ${merged.length} careers (kept ${existingRaw.length} existing, added ${merged.length - existingRaw.length} from Supabase) to ${targetPath}`);
+}
+
+syncRecoCareers()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error('Failed to sync reco careers:', err);
+    process.exit(1);
+  });

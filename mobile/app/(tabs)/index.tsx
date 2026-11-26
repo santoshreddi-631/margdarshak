@@ -26,6 +26,8 @@ import {
   MessageSquare,
   ChevronRight,
   BookOpen,
+  Award,
+  Compass,
 } from 'lucide-react-native';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
 import { Header } from '@/components/ui/Header';
@@ -34,6 +36,16 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/context/AuthContext';
 import { getAssessmentDraft, getCompletedAssessment } from '@/services/assessmentStorage';
+import {
+  fetchCareers,
+  fetchCareerCategories,
+  fetchRecommendations,
+  fetchOpportunities,
+  type ApiCareer,
+  type ApiCareerCategory,
+  type ApiRecommendation,
+  type ApiOpportunity,
+} from '@/services/api';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -47,21 +59,49 @@ export default function HomeScreen() {
     isCompleted: boolean;
     step: number;
   }>({ isCompleted: false, step: 1 });
+  const [careers, setCareers] = useState<ApiCareer[]>([]);
+  const [categories, setCategories] = useState<ApiCareerCategory[]>([]);
+  const [topRecommendation, setTopRecommendation] = useState<ApiRecommendation | null>(null);
+  const [featuredOpportunities, setFeaturedOpportunities] = useState<ApiOpportunity[]>([]);
 
   useEffect(() => {
-    async function checkAssessment() {
+    async function loadDashboard() {
       const completed = await getCompletedAssessment();
       if (completed) {
         setAssessmentStatus({ isCompleted: true, step: 5 });
-        return;
+      } else {
+        const draft = await getAssessmentDraft();
+        if (draft && draft.currentStep) {
+          setAssessmentStatus({ isCompleted: false, step: draft.currentStep });
+        }
       }
-      const draft = await getAssessmentDraft();
-      if (draft && draft.currentStep) {
-        setAssessmentStatus({ isCompleted: false, step: draft.currentStep });
+
+      try {
+        const [careerList, catList, recs, opps] = await Promise.all([
+          fetchCareers(language),
+          fetchCareerCategories(language),
+          fetchRecommendations(language).catch(() => []),
+          fetchOpportunities('all', language).catch(() => []),
+        ]);
+        setCareers(careerList);
+        setCategories(catList);
+        if (recs && recs.length > 0) {
+          setTopRecommendation(recs[0]);
+        } else if (careerList.length > 0) {
+          setTopRecommendation({
+            id: 'top-fallback',
+            career_id: careerList[0].id,
+            match_score: 90,
+            match_reasons: [],
+            career: careerList[0],
+          });
+        }
+        setFeaturedOpportunities((opps || []).slice(0, 3));
+      } catch (_e) {
       }
     }
-    checkAssessment();
-  }, []);
+    loadDashboard();
+  }, [language]);
 
   const userName = profile?.name || user?.fullName || 'Rahul Sharma';
   const userDistrict = profile?.district && profile?.state
@@ -197,7 +237,7 @@ export default function HomeScreen() {
                 />
                 <Text style={styles.taskMetaText}>
                   {assessmentStatus.isCompleted
-                    ? 'Verified 93% match'
+                    ? `Verified ${topRecommendation?.match_score || 93}% match`
                     : assessmentStatus.step > 1
                     ? `Step ${assessmentStatus.step} of 5`
                     : '5 Min Questionnaire'}
@@ -258,41 +298,61 @@ export default function HomeScreen() {
               </View>
             </Card>
 
-            {/* Featured Career Spotlight - ONLY for completed users with active roadmap */}
+            {/* Featured Career Spotlight - ONLY for completed users with active recommendation */}
             {assessmentStatus.isCompleted && (
               <Card variant="elevated" style={styles.taskCard}>
                 <View style={styles.taskCardTop}>
-                  <Badge label="In progress" variant="in_progress" />
-                  <Badge label="High Demand" variant="done" />
+                  <Badge label="Top Match" variant="in_progress" />
+                  <Badge
+                    label={
+                      topRecommendation?.career?.growth_demand === 'high'
+                        ? 'High Demand'
+                        : topRecommendation?.career?.growth_demand === 'emerging'
+                        ? 'Emerging Demand'
+                        : 'Steady Demand'
+                    }
+                    variant="done"
+                  />
                 </View>
 
-                <Text style={styles.taskTitle}>Solar PV Systems Technician</Text>
+                <Text style={styles.taskTitle}>
+                  {topRecommendation?.career?.title ||
+                    topRecommendation?.career?.translation?.title ||
+                    'Solar PV Systems Technician'}
+                </Text>
                 <Text style={styles.taskSubtitle}>
-                  Clean Energy & Rural Electrification • MP State District
+                  {`${topRecommendation?.career?.category?.name || 'Vocational Sector'} • ${userDistrict}`}
                 </Text>
 
                 {/* Metric stats row */}
                 <View style={styles.metricStatsRow}>
                   <View style={styles.metricItem}>
                     <Text style={styles.metricLabel}>Min. Education</Text>
-                    <Text style={styles.metricValue}>10th + ITI</Text>
+                    <Text style={styles.metricValue} numberOfLines={1}>
+                      {topRecommendation?.career?.minimum_education || '10th + ITI'}
+                    </Text>
                   </View>
                   <View style={styles.metricDivider} />
                   <View style={styles.metricItem}>
                     <Text style={styles.metricLabel}>Est. Earnings</Text>
-                    <Text style={styles.metricValue}>₹18k - ₹28k/mo</Text>
+                    <Text style={styles.metricValue} numberOfLines={1}>
+                      {topRecommendation?.career?.estimated_salary_range || '₹18k - ₹32k/mo'}
+                    </Text>
                   </View>
                   <View style={styles.metricDivider} />
                   <View style={styles.metricItem}>
                     <Text style={styles.metricLabel}>Duration</Text>
-                    <Text style={styles.metricValue}>3 - 6 Months</Text>
+                    <Text style={styles.metricValue} numberOfLines={1}>
+                      {topRecommendation?.career?.training_duration || '3 - 6 Months'}
+                    </Text>
                   </View>
                 </View>
 
                 <View style={styles.schemeNoticeBox}>
                   <CheckCircle2 size={15} color={Colors.success} />
                   <Text style={styles.schemeNoticeText}>
-                    Supported by PMKVY 4.0 Free Government Training & Apprenticeship
+                    {topRecommendation?.match_reasons?.[0] ||
+                      'Supported by verified Government Skilling & Apprenticeship pathways'}
                   </Text>
                 </View>
 
@@ -303,7 +363,11 @@ export default function HomeScreen() {
                     size="sm"
                     fullWidth={!isDesktop}
                     rightIcon={<ChevronRight size={14} color={Colors.textPrimary} />}
-                    onPress={() => router.push('/career/a1000000-0000-0000-0000-000000000001')}
+                    onPress={() =>
+                      router.push(
+                        `/career/${topRecommendation?.career_id || 'a1000000-0000-0000-0000-000000000001'}`
+                      )
+                    }
                   />
                 </View>
               </Card>
@@ -318,17 +382,49 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.sectorsGrid}>
-              {[
-                { title: 'Solar Energy', count: '12 Pathways', icon: <Sun size={18} color="#FFFFFF" />, bg: Colors.primary },
-                { title: 'Agriculture', count: '9 Pathways', icon: <Sprout size={18} color={Colors.dark} />, bg: Colors.mint },
-                { title: 'Auto & EV', count: '8 Pathways', icon: <Wrench size={18} color="#FFFFFF" />, bg: Colors.dark },
-                { title: 'Healthcare', count: '7 Pathways', icon: <HeartPulse size={18} color="#FFFFFF" />, bg: '#FB7185' },
-                { title: 'IT & Digital', count: '14 Pathways', icon: <Laptop size={18} color="#FFFFFF" />, bg: '#6366F1' },
-                { title: 'Electrical & Power', count: '11 Pathways', icon: <Wrench size={18} color="#FFFFFF" />, bg: '#F59E0B' },
-              ].map((sector, idx) => (
+              {(categories.length > 0
+                ? categories.map((cat) => {
+                    const count = careers.filter(
+                      (c) => (c.category?.code || '').toLowerCase() === cat.code.toLowerCase()
+                    ).length;
+                    const palette: Record<string, { bg: string; icon: React.ReactNode }> = {
+                      renewable_energy: { bg: Colors.primary, icon: <Sun size={18} color="#FFFFFF" /> },
+                      modern_agriculture: { bg: Colors.mint, icon: <Sprout size={18} color={Colors.dark} /> },
+                      automotive: { bg: Colors.dark, icon: <Wrench size={18} color="#FFFFFF" /> },
+                      healthcare: { bg: '#FB7185', icon: <HeartPulse size={18} color="#FFFFFF" /> },
+                      digital_services: { bg: '#6366F1', icon: <Laptop size={18} color="#FFFFFF" /> },
+                      technical: { bg: '#0EA5E9', icon: <Laptop size={18} color="#FFFFFF" /> },
+                      business: { bg: '#10B981', icon: <BookOpen size={18} color="#FFFFFF" /> },
+                      government_services: { bg: '#8B5CF6', icon: <Award size={18} color="#FFFFFF" /> },
+                      education: { bg: '#EC4899', icon: <BookOpen size={18} color="#FFFFFF" /> },
+                      trades: { bg: '#F59E0B', icon: <Wrench size={18} color="#FFFFFF" /> },
+                    };
+                    const visual = palette[cat.code] || { bg: Colors.primary, icon: <Compass size={18} color="#FFFFFF" /> };
+                    return {
+                      code: cat.code,
+                      title: cat.name,
+                      count: `${count || 1} ${(count || 1) === 1 ? 'Pathway' : 'Pathways'}`,
+                      icon: visual.icon,
+                      bg: visual.bg,
+                    };
+                  })
+                : [
+                    { code: 'renewable_energy', title: 'Solar & Clean Tech', count: '2 Pathways', icon: <Sun size={18} color="#FFFFFF" />, bg: Colors.primary },
+                    { code: 'modern_agriculture', title: 'Modern Agriculture', count: '3 Pathways', icon: <Sprout size={18} color={Colors.dark} />, bg: Colors.mint },
+                    { code: 'automotive', title: 'Auto & EV', count: '2 Pathways', icon: <Wrench size={18} color="#FFFFFF" />, bg: Colors.dark },
+                    { code: 'healthcare', title: 'Healthcare', count: '3 Pathways', icon: <HeartPulse size={18} color="#FFFFFF" />, bg: '#FB7185' },
+                    { code: 'technical', title: 'IT & Digital', count: '10 Pathways', icon: <Laptop size={18} color="#FFFFFF" />, bg: '#6366F1' },
+                    { code: 'trades', title: 'Electrical & Trades', count: '4 Pathways', icon: <Wrench size={18} color="#FFFFFF" />, bg: '#F59E0B' },
+                  ]
+              ).map((sector) => (
                 <Pressable
-                  key={idx}
-                  onPress={() => router.push('/(tabs)/explore')}
+                  key={sector.code}
+                  onPress={() =>
+                    router.push({
+                      pathname: '/(tabs)/explore',
+                      params: { category: sector.code },
+                    })
+                  }
                   style={({ pressed }) => [
                     styles.sectorCard,
                     pressed && styles.sectorCardPressed,
@@ -338,7 +434,7 @@ export default function HomeScreen() {
                     {sector.icon}
                   </View>
                   <View style={styles.sectorInfo}>
-                    <Text style={styles.sectorTitle}>{sector.title}</Text>
+                    <Text style={styles.sectorTitle} numberOfLines={2}>{sector.title}</Text>
                     <Text style={styles.sectorCount}>{sector.count}</Text>
                   </View>
                 </Pressable>
@@ -357,35 +453,82 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.conspectusRow}>
-              {/* Mint Card */}
-              <Card variant="mint" padding="md" style={styles.conspectusCard}>
-                <Text style={styles.conspectusCardTag}>Technical Trade Fit</Text>
-                <Text style={styles.conspectusCardTitle}>Solar PV & Electrical Systems</Text>
-                <Text style={styles.conspectusCardBody}>
-                  Solar installation and pump wiring skills match your rural district preference with strong local employment.
-                </Text>
-                <Text style={styles.conspectusCardDate}>Updated Today</Text>
-              </Card>
-
-              {/* Lavender Card */}
-              <Card variant="lavender" padding="md" style={styles.conspectusCard}>
-                <Text style={[styles.conspectusCardTag, { color: '#FFFFFF' }]}>Scholarship Scheme</Text>
-                <Text style={[styles.conspectusCardTitle, { color: '#FFFFFF' }]}>PM Vishwakarma Toolkit</Text>
-                <Text style={[styles.conspectusCardBody, { color: 'rgba(255, 255, 255, 0.9)' }]}>
-                  ₹15,000 tool incentive and credit support for technical apprentice students completing state exams.
-                </Text>
-                <Text style={[styles.conspectusCardDate, { color: 'rgba(255, 255, 255, 0.75)' }]}>Active for 2026</Text>
-              </Card>
-
-              {/* Solar Scheme Card for New Users */}
-              <Card variant="elevated" padding="md" style={styles.conspectusCard}>
-                <Text style={[styles.conspectusCardTag, { color: Colors.primaryDark }]}>Government Grant</Text>
-                <Text style={styles.conspectusCardTitle}>PM Surya Ghar Muft Bijli Yojana</Text>
-                <Text style={[styles.conspectusCardBody, { color: Colors.textSecondary }]}>
-                  Subsidized national rooftop installation program with 100,000+ local technician openings.
-                </Text>
-                <Text style={[styles.conspectusCardDate, { color: Colors.textMuted }]}>National Portal Verified</Text>
-              </Card>
+              {(featuredOpportunities.length > 0
+                ? featuredOpportunities
+                : [
+                    {
+                      id: 'fallback-opp-1',
+                      category: 'internship',
+                      title: 'PM Internship Scheme (Top 500 Companies)',
+                      financial_benefit: '₹5,000/month DBT stipend + ₹6,000 incidentals across 24 sectors.',
+                      deadline_notice: 'Rolling Applications Active',
+                    },
+                    {
+                      id: 'fallback-opp-2',
+                      category: 'scholarship',
+                      title: 'PM Vishwakarma Toolkit',
+                      financial_benefit: '₹15,000 tool incentive and credit support for certified artisans and trades.',
+                      deadline_notice: 'Active Year-Round',
+                    },
+                    {
+                      id: 'fallback-opp-3',
+                      category: 'government_scheme',
+                      title: 'PM Surya Ghar Muft Bijli Yojana',
+                      financial_benefit: 'Subsidized national rooftop solar program creating local technician openings.',
+                      deadline_notice: 'National Portal Verified',
+                    },
+                  ]
+              ).map((opp, idx) => {
+                const variant = idx === 0 ? 'mint' : idx === 1 ? 'lavender' : 'elevated';
+                const isLavender = variant === 'lavender';
+                return (
+                  <Pressable key={opp.id} onPress={() => router.push('/(tabs)/opportunities')}>
+                    <Card variant={variant} padding="md" style={styles.conspectusCard}>
+                      <Text
+                        style={[
+                          styles.conspectusCardTag,
+                          isLavender ? { color: '#FFFFFF' } : idx === 2 ? { color: Colors.primaryDark } : undefined,
+                        ]}
+                      >
+                        {opp.category.replace('_', ' ').toUpperCase()}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.conspectusCardTitle,
+                          isLavender ? { color: '#FFFFFF' } : undefined,
+                        ]}
+                      >
+                        {opp.title}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.conspectusCardBody,
+                          isLavender
+                            ? { color: 'rgba(255, 255, 255, 0.9)' }
+                            : idx === 2
+                            ? { color: Colors.textSecondary }
+                            : undefined,
+                        ]}
+                        numberOfLines={3}
+                      >
+                        {opp.financial_benefit}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.conspectusCardDate,
+                          isLavender
+                            ? { color: 'rgba(255, 255, 255, 0.75)' }
+                            : idx === 2
+                            ? { color: Colors.textMuted }
+                            : undefined,
+                        ]}
+                      >
+                        {opp.deadline_notice || 'Verified Official Portal'}
+                      </Text>
+                    </Card>
+                  </Pressable>
+                );
+              })}
             </View>
 
             {/* Daily Roadmap Schedule Preview - ONLY for users who have completed assessment */}

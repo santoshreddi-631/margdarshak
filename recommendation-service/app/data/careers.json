@@ -1421,5 +1421,1056 @@
         "description": "घरों, दुकानों और कारखानों में बिजली की तारों, स्विचबोर्ड, मोटर, ट्रांसफार्मर और उपकरणों की सुरक्षित स्थापना और मरम्मत करता है।"
       }
     }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000002",
+    "slug": "organic-farm-supervisor",
+    "name": "Organic Farm & Soil Supervisor",
+    "category": "modern_agriculture",
+    "growth_demand": "emerging",
+    "estimated_salary_range": "₹16,000 - ₹25,000 / month",
+    "training_duration": "4 months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th / 12th Pass",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Soil pH Testing",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Drip Irrigation Maintenance",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Agriculture Fundamentals",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "agriculture",
+      "science",
+      "entrepreneurship"
+    ],
+    "translations": {
+      "en": {
+        "title": "Organic Farm & Soil Supervisor",
+        "description": "Guide farmer clusters in organic certification, bio-fertilizers, and drip irrigation optimization."
+      },
+      "te": {
+        "title": "ఆర్గానిక్ వ్యవసాయం & నేల పర్యవేక్షకుడు",
+        "description": "రైతు సమూహాలకు సేంద్రీయ ధృవీకరణ, జీవ ఎరువులు మరియు బిందు సేద్యం నిర్వహణలో మార్గదర్శనం చేయడం."
+      },
+      "hi": {
+        "title": "जैविक कृषि एवं मृदा पर्यवेक्षक",
+        "description": "किसान समूहों को जैविक प्रमाणीकरण, जैविक खाद और ड्रिप सिंचाई प्रबंधन में मार्गदर्शन देना।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000003",
+    "slug": "ev-two-wheeler-specialist",
+    "name": "EV Two-Wheeler Service Specialist",
+    "category": "automotive",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹20,000 - ₹32,000 / month",
+    "training_duration": "6 months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI Motor Mechanic",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "EV Diagnostic Scanner",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Battery Management Systems",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Multimeter Testing",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "electronics",
+      "technology",
+      "trades"
+    ],
+    "translations": {
+      "en": {
+        "title": "EV Two-Wheeler Service Specialist",
+        "description": "Diagnoses, services, and repairs electric scooters, BLDC hub motors, lithium-ion battery packs, and regenerative controllers."
+      },
+      "te": {
+        "title": "ఈవీ టూ-వీలర్ సర్వీస్ స్పెషలిస్ట్ (EV Service Specialist)",
+        "description": "ఎలక్ట్రిక్ స్కూటర్లు, BLDC హబ్ మోటార్లు, లిథియం-అయాన్ బ్యాటరీ ప్యాక్‌లు మరియు కంట్రోలర్‌లను పరీక్షించి మరమ్మతు చేసే నిపుణుడు."
+      },
+      "hi": {
+        "title": "ईवी टू-व्हीलर सर्विस विशेषज्ञ (EV Service Specialist)",
+        "description": "इलेक्ट्रिक स्कूटर, बीएलडीसी मोटर, लिथियम-आयन बैटरी पैक और मोटर कंट्रोलर की जांच और मरम्मत करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000004",
+    "slug": "rural-health-facilitator",
+    "name": "Rural Community Health Facilitator",
+    "category": "healthcare",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹15,000 - ₹24,000 / month",
+    "training_duration": "6 months",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass (Any Stream)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Patient Vitals Recording",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "First Aid & Patient Care",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Record Keeping & Documentation",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "healthcare",
+      "science",
+      "social_work"
+    ],
+    "translations": {
+      "en": {
+        "title": "Rural Community Health Facilitator",
+        "description": "Supports primary health centers and village wellness clinics with vitals screening, immunization outreach, maternal care tracking, and telemedicine."
+      },
+      "te": {
+        "title": "గ్రామీణ కమ్యూనిటీ హెల్త్ ఫెసిలిటేటర్",
+        "description": "గ్రామ ఆరోగ్య కేంద్రాలు మరియు ప్రాథమిక ఆరోగ్య కేంద్రాలలో రక్తపోటు, షుగర్ పరీక్షలు, టీకాల కార్యక్రమం మరియు టెలిమెడిసిన్ సేవల్లో సహాయం చేస్తుంది."
+      },
+      "hi": {
+        "title": "ग्रामीण सामुदायिक स्वास्थ्य सहायक",
+        "description": "ग्रामीण स्वास्थ्य केंद्रों में प्राथमिक जांच, टीकाकरण अभियान, मातृ एवं शिशु स्वास्थ्य रिकॉर्ड और टेलीमेडिसिन सेवाओं में सहायता करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000005",
+    "slug": "csc-digital-operator",
+    "name": "Village CSC Digital Services Operator",
+    "category": "digital_services",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹15,000 - ₹26,000 / month",
+    "training_duration": "2 months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th / 12th Pass",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Digital Data Entry",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Record Keeping & Documentation",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technology",
+      "entrepreneurship",
+      "social_work"
+    ],
+    "translations": {
+      "en": {
+        "title": "Village CSC Digital Services Operator",
+        "description": "Delivers e-Governance, banking, passport, PAN, Aadhaar update, PM-KISAN, and insurance certificates to rural citizens via Common Service Centres."
+      },
+      "te": {
+        "title": "విలేజ్ సిఎస్సి డిజిటల్ సర్వీసెస్ ఆపరేటర్",
+        "description": "గ్రామ కామన్ సర్వీస్ సెంటర్ (CSC / మీ-సేవ) ద్వారా పౌరులకు ఆధార్, పాన్ కార్డు, కుల/ఆదాయ ధృవీకరణ పత్రాలు, PM-KISAN మరియు బ్యాంకింగ్ సేవలు అందిస్తారు."
+      },
+      "hi": {
+        "title": "ग्रामीण सीएससी डिजिटल सेवा ऑपरेटर (VLE)",
+        "description": "कॉमन सर्विस सेंटर (जन सेवा केंद्र) के माध्यम से ग्रामीण नागरिकों को ई-गवर्नेंस, बैंकिंग, पैन कार्ड, प्रमाण-पत्र और सरकारी योजनाओं की सेवाएं देता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000025",
+    "slug": "agricultural-drone-operator",
+    "name": "Agricultural Drone Operator (Kisan Drone Pilot)",
+    "category": "modern_agriculture",
+    "growth_demand": "emerging",
+    "estimated_salary_range": "₹22,000 - ₹45,000 / month",
+    "training_duration": "2 to 3 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + DGCA Remote Pilot Certificate (RPC)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Drone Flight Operations",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Agriculture Fundamentals",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Multimeter Testing",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "agriculture",
+      "science",
+      "entrepreneurship"
+    ],
+    "translations": {
+      "en": {
+        "title": "Agricultural Drone Operator (Kisan Drone Pilot)",
+        "description": "Pilots DGCA-certified unmanned aircraft systems (Kisan Drones) for precision nano-urea spraying, foliar nutrition, and crop health surveying."
+      },
+      "te": {
+        "title": "అగ్రికల్చరల్ డ్రోన్ ఆపరేటర్ (కిసాన్ డ్రోన్ పైలట్)",
+        "description": "వ్యవసాయ భూములలో నానో యూరియా పిచికారీ, పంట ఆరోగ్య సర్వే కోసం DGCA ఆమోదిత కిసాన్ డ్రోన్‌లను నడిపే సాంకేతిక నిపుణుడు."
+      },
+      "hi": {
+        "title": "कृषि ड्रोन ऑपरेटर (किसान ड्रोन पायलट)",
+        "description": "खेतों में नैनो यूरिया छिड़काव, फसल निगरानी और सटीक खेती के लिए डीजीसीए प्रमाणित किसान ड्रोन का संचालन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000026",
+    "slug": "cnc-machine-operator",
+    "name": "CNC Machine Operator & Turner",
+    "category": "trades",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹34,000 / month",
+    "training_duration": "6 Months to 2 Years (ITI)",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI Turner / Machinist",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "CNC Machining & G-Code",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Blueprint & Engineering Drawing Reading",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "trades",
+      "electronics",
+      "technology"
+    ],
+    "translations": {
+      "en": {
+        "title": "CNC Machine Operator & Turner",
+        "description": "Sets up and operates Computer Numerical Control (CNC) lathes and VMC milling machines to manufacture precision automotive and industrial parts."
+      },
+      "te": {
+        "title": "సీఎన్‌సీ మెషిన్ ఆపరేటర్ & టర్నర్ (CNC Operator)",
+        "description": "ఆటోమొబైల్ మరియు పారిశ్రామిక విడిభాగాల తయారీలో కంప్యూటర్ ఆధారిత CNC లేత్ మరియు మిల్లింగ్ యంత్రాలను నడిపే నిపుణుడు."
+      },
+      "hi": {
+        "title": "सीएनसी मशीन ऑपरेटर एवं टर्नर (CNC Operator)",
+        "description": "ऑटोमोबाइल और औद्योगिक पुर्जे बनाने के लिए कंप्यूटर नियंत्रित सीएनसी लेथ और मिलिंग मशीनों का संचालन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000027",
+    "slug": "medical-lab-technician",
+    "name": "Medical Laboratory Technician (DMLT)",
+    "category": "healthcare",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹36,000 / month",
+    "training_duration": "1 to 2 Years",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass (Science/BiPC) + DMLT Diploma",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Clinical Sample Testing & Hematology",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Lab Safety & Sterilization",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Patient Vitals Recording",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Record Keeping & Documentation",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "healthcare",
+      "science",
+      "social_work"
+    ],
+    "translations": {
+      "en": {
+        "title": "Medical Laboratory Technician (DMLT)",
+        "description": "Collects blood, urine, and tissue samples and runs hematology, biochemistry, and microbiology diagnostic tests in hospitals and diagnostic labs."
+      },
+      "te": {
+        "title": "మెడికల్ ల్యాబొరేటరీ టెక్నీషియన్ (DMLT)",
+        "description": "ఆసుపత్రులు మరియు డయాగ్నస్టిక్ కేంద్రాలలో రక్త, మూత్ర నమూనాలను సేకరించి వ్యాధి నిర్ధారణ పరీక్షలు చేసే వైద్య సహాయ నిపుణుడు."
+      },
+      "hi": {
+        "title": "मेडिकल लैबोरेटरी तकनीशियन (DMLT)",
+        "description": "अस्पतालों और पैथोलॉजी लैब में रक्त, मूत्र और ऊतक के नमूने लेकर हेमेटोलॉजी और माइक्रोबायोलॉजी जांच करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000028",
+    "slug": "hospital-nursing-assistant",
+    "name": "Hospital Nursing Assistant / General Duty Assistant",
+    "category": "healthcare",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹15,000 - ₹28,000 / month",
+    "training_duration": "4 to 6 Months (GDA) / 2 Years (ANM)",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th / 12th Pass + HSSC GDA or ANM",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Patient Vitals Recording",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "First Aid & Patient Care",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Teamwork",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "healthcare",
+      "science",
+      "social_work"
+    ],
+    "translations": {
+      "en": {
+        "title": "Hospital Nursing Assistant / General Duty Assistant",
+        "description": "Provides essential bedside patient care, vitals monitoring, hygiene assistance, and ward support alongside doctors and staff nurses in hospitals and clinics."
+      },
+      "te": {
+        "title": "హాస్పిటల్ నర్సింగ్ అసిస్టెంట్ / జనరల్ డ్యూటీ అసిస్టెంట్ (GDA)",
+        "description": "ఆసుపత్రులు మరియు నర్సింగ్ హోమ్‌లలో డాక్టర్లు, నర్సులతో కలిసి రోగులకు ప్రాథమిక సంరక్షణ, వైటల్స్ తనిఖీ మరియు వార్డు సేవలు అందిస్తారు."
+      },
+      "hi": {
+        "title": "हॉस्पिटल नर्सिंग असिस्टेंट / जनरल ड्यूटी असिस्टेंट (GDA)",
+        "description": "अस्पतालों और क्लीनिकों में डॉक्टरों व नर्सों के साथ मिलकर मरीजों की देखभाल, वाइटल जांच और वार्ड सहायता सेवाएं प्रदान करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000029",
+    "slug": "smartphone-repair-technician",
+    "name": "Smartphone & Electronics Repair Technician",
+    "category": "trades",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹16,000 - ₹35,000 / month",
+    "training_duration": "3 to 4 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass / ITI Electronics Mechanic",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Micro-Soldering & PCB Repair",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Multimeter Testing",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "trades",
+      "electronics",
+      "technology"
+    ],
+    "translations": {
+      "en": {
+        "title": "Smartphone & Electronics Repair Technician",
+        "description": "Diagnoses hardware faults, replaces cracked displays and charging ICs using SMD micro-soldering stations, and resolves Android/iOS software issues."
+      },
+      "te": {
+        "title": "స్మార్ట్‌ఫోన్ & ఎలక్ట్రానిక్స్ రిపేర్ టెక్నీషియన్",
+        "description": "స్మార్ట్‌ఫోన్ల మదర్‌బోర్డ్ లోపాలు, డిస్‌ప్లే మార్పిడి, మైక్రో-సోల్డరింగ్ మరియు సాఫ్ట్‌వేర్ సమస్యలను పరిష్కరించే సాంకేతిక నిపుణుడు."
+      },
+      "hi": {
+        "title": "स्मार्टफोन और इलेक्ट्रॉनिक्स रिपेयर तकनीशियन",
+        "description": "माइक्रो-सोल्डरिंग और डिजिटल मल्टीमीटर की मदद से मोबाइल फोन के हार्डवेयर, डिस्प्ले, बैटरी और सॉफ्टवेयर की मरम्मत करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000030",
+    "slug": "hvac-refrigeration-technician",
+    "name": "HVAC & Refrigeration Technician",
+    "category": "trades",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹35,000 / month",
+    "training_duration": "6 Months to 2 Years",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI RAC (Refrigeration & AC)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "HVAC Refrigerant & Compressor Service",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Electrical Wiring",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Multimeter Testing",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "trades",
+      "electronics",
+      "technology"
+    ],
+    "translations": {
+      "en": {
+        "title": "HVAC & Refrigeration Technician",
+        "description": "Installs, commissions, and services split/inverter air conditioners, deep freezers, cold storage units, and commercial HVAC plants."
+      },
+      "te": {
+        "title": "హెచ్‌వీఏసీ & రిఫ్రిజిరేషన్ టెక్నీషియన్ (AC & Fridge Mechanic)",
+        "description": "స్ప్లిట్ ఇన్వర్టర్ ఏసీలు, రిఫ్రిజిరేటర్లు మరియు కోల్డ్ స్టోరేజ్ యూనిట్లను అమర్చి సర్వీసింగ్ చేసే సాంకేతిక నిపుణుడు."
+      },
+      "hi": {
+        "title": "एचवीएसी और रेफ्रिजरेशन तकनीशियन (AC व फ्रिज मैकेनिक)",
+        "description": "घरों, दुकानों और कोल्ड स्टोरेज में स्प्लिट/इन्वर्टर एसी, फ्रिज और कूलिंग सिस्टम की स्थापना व मरम्मत करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000031",
+    "slug": "dairy-farm-supervisor",
+    "name": "Dairy Farm & Livestock Supervisor",
+    "category": "modern_agriculture",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹16,000 - ₹32,000 / month",
+    "training_duration": "3 to 6 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th / 12th Pass + Dairy Farming Certificate",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Livestock Nutrition & Dairy Hygiene",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Agriculture Fundamentals",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Record Keeping & Documentation",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "agriculture",
+      "science",
+      "entrepreneurship"
+    ],
+    "translations": {
+      "en": {
+        "title": "Dairy Farm & Livestock Supervisor",
+        "description": "Manages scientific cattle nutrition, clean milking parlors, milk fat/SNF quality testing, silage preservation, and rural dairy cooperative collection centers."
+      },
+      "te": {
+        "title": "డెయిరీ ఫామ్ & పశుపోషణ పర్యవేక్షకుడు",
+        "description": "పాల ఉత్పత్తి కేంద్రాలు, పశువుల దాణా సమతుల్యత, పాల కొవ్వు/SNF పరీక్షలు మరియు పాల సహకార సంఘాలను నిర్వహించే నిపుణుడు."
+      },
+      "hi": {
+        "title": "डेयरी फार्म और पशुधन पर्यवेक्षक",
+        "description": "वैज्ञानिक पशु आहार, स्वच्छ दुग्ध उत्पादन, दूध की फैट/एसएनएफ जांच और ग्रामीण डेयरी सहकारी केंद्रों का संचालन करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000032",
+    "slug": "ev-charging-station-technician",
+    "name": "EV Battery & Charging Station Technician",
+    "category": "automotive",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹22,000 - ₹40,000 / month",
+    "training_duration": "4 to 6 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th + ITI Electrical / Electronics or Polytechnic",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "EV Charging Station Safety",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Battery Management Systems",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Electrical Wiring",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "EV Diagnostic Scanner",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "electronics",
+      "technology",
+      "trades"
+    ],
+    "translations": {
+      "en": {
+        "title": "EV Battery & Charging Station Technician",
+        "description": "Installs, commissions, and maintains public AC/DC Electric Vehicle charging stations, high-voltage power electronics, and lithium battery packs."
+      },
+      "te": {
+        "title": "ఈవీ బ్యాటరీ & ఛార్జింగ్ స్టేషన్ టెక్నీషియన్",
+        "description": "ఎలక్ట్రిక్ వాహనాల పబ్లిక్ AC/DC ఫాస్ట్ ఛార్జింగ్ స్టేషన్లు, హై-వోల్టేజ్ ఎలక్ట్రానిక్స్ మరియు లిథియం బ్యాటరీ ప్యాక్‌లను అమర్చి నిర్వహిస్తారు."
+      },
+      "hi": {
+        "title": "ईवी बैटरी और चार्जिंग स्टेशन तकनीशियन",
+        "description": "इलेक्ट्रिक वाहनों के पब्लिक एसी/डीसी फास्ट चार्जिंग स्टेशन, हाई-वोल्टेज पावर सिस्टम और लिथियम बैटरी पैक की स्थापना व रखरखाव करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000033",
+    "slug": "it-helpdesk-support-technician",
+    "name": "IT Helpdesk & Hardware Support Technician",
+    "category": "technical",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹34,000 / month",
+    "training_duration": "3 to 6 Months",
+    "required_education": "12th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "12th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 12th Pass / ITI COPA / Polytechnic / Any Graduate",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "PC Hardware & OS Troubleshooting",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Networking",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Linux",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "technology",
+      "programming",
+      "electronics"
+    ],
+    "translations": {
+      "en": {
+        "title": "IT Helpdesk & Hardware Support Technician",
+        "description": "Configures office desktops, installs Windows/Linux OS, resolves Wi-Fi/LAN network issues, manages printers, and handles L1 IT support tickets."
+      },
+      "te": {
+        "title": "ఐటీ హెల్ప్‌డెస్క్ & హార్డ్‌వేర్ సపోర్ట్ టెక్నీషియన్",
+        "description": "కార్యాలయాల్లో కంప్యూటర్ హార్డ్‌వేర్, Windows/Linux OS ఇన్‌స్టాలేషన్, వై-ఫై/LAN నెట్‌వర్క్ సమస్యలు మరియు L1 IT సపోర్ట్ టికెట్లను పరిష్కరిస్తారు."
+      },
+      "hi": {
+        "title": "आईटी हेल्पडेस्क एवं हार्डवेयर सपोर्ट तकनीशियन",
+        "description": "कार्यालयों में कंप्यूटर हार्डवेयर, विंडोज/लिनक्स ओएस, वाई-फाई/लैन नेटवर्क और प्रिंटर समस्याओं का समाधान करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000034",
+    "slug": "gramin-dak-sevak",
+    "name": "Gramin Dak Sevak (India Post BPM / ABPM)",
+    "category": "government_services",
+    "growth_demand": "steady",
+    "estimated_salary_range": "₹12,000 - ₹29,380 / month (TRCA Pay Scale + Allowances)",
+    "training_duration": "Direct Merit Selection + Induction Training",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass (Matriculation with Local Language & Maths)",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Postal Banking & Aadhaar AePS Operations",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Digital Data Entry",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Record Keeping & Documentation",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "government_services",
+      "social_work",
+      "business"
+    ],
+    "translations": {
+      "en": {
+        "title": "Gramin Dak Sevak (India Post BPM / ABPM)",
+        "description": "Manages village Branch Post Offices and delivers registered mail, India Post Payments Bank (IPPB) digital banking, and Sukanya Samriddhi savings schemes."
+      },
+      "te": {
+        "title": "గ్రామీణ డాక్ సేవక్ (ఇండియా పోస్ట్ BPM / ABPM)",
+        "description": "గ్రామ బ్రాంచ్ పోస్ట్ ఆఫీసులను నిర్వహిస్తూ ఉత్తరాలు, ఇండియా పోస్ట్ పేమెంట్స్ బ్యాంక్ (IPPB) డిజిటల్ బ్యాంకింగ్ మరియు పొదుపు ఖాతాల సేవలు అందిస్తారు."
+      },
+      "hi": {
+        "title": "ग्रामीण डाक सेवक (इंडिया पोस्ट BPM / ABPM)",
+        "description": "ग्रामीण शाखा डाकघरों का संचालन करते हुए डाक वितरण, इंडिया पोस्ट पेमेंट्स बैंक (IPPB) और सुकन्या समृद्धि बचत योजना सेवाएं प्रदान करता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000035",
+    "slug": "solar-pump-irrigation-installer",
+    "name": "Solar Water Pump & Micro-Irrigation Installer",
+    "category": "renewable_energy",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹18,000 - ₹32,000 / month",
+    "training_duration": "3 to 4 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 10th Pass + ITI / PM-KUSUM Skill Certificate",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "Solar DC Water Pump Installation",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Drip Irrigation Maintenance",
+        "importance": "required",
+        "weight": 1
+      },
+      {
+        "name": "Electrical Wiring",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Solar Panel Mounting",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "renewable_energy",
+      "electronics",
+      "technology"
+    ],
+    "translations": {
+      "en": {
+        "title": "Solar Water Pump & Micro-Irrigation Installer",
+        "description": "Installs DC/AC solar agricultural water pumps (2HP to 10HP) under PM-KUSUM and integrates them directly with drip and sprinkler farm pipelines."
+      },
+      "te": {
+        "title": "సోలార్ వాటర్ పంప్ & మైక్రో-ఇరిగేషన్ ఇన్‌స్టాలర్",
+        "description": "పీఎం-కుసుమ్ (PM-KUSUM) పథకం క్రింద వ్యవసాయ బోర్లకు సోలార్ వాటర్ పంపులను అమర్చి డ్రిప్/స్ప్రింక్లర్ పైపులతో అనుసంధానం చేస్తారు."
+      },
+      "hi": {
+        "title": "सोलर वॉटर पंप और सूक्ष्म सिंचाई तकनीशियन",
+        "description": "पीएम-कुसुम योजना के तहत खेतों में 2 से 10 एचपी सोलर कृषि पंप लगाता है और उन्हें ड्रिप व स्प्रिंकलर सिंचाई से जोड़ता है।"
+      }
+    }
+  },
+  {
+    "id": "a1000000-0000-0000-0000-000000000036",
+    "slug": "plumber-water-supply-technician",
+    "name": "Plumber & Rural Water Supply Technician (Nal Jal Mitra)",
+    "category": "trades",
+    "growth_demand": "high",
+    "estimated_salary_range": "₹15,000 - ₹28,000 / month",
+    "training_duration": "3 to 6 Months",
+    "required_education": "10th_standard",
+    "eligibility_requirements": {
+      "min_education_level": "10th_standard",
+      "allowed_streams": [
+        "any"
+      ],
+      "mandatory_rules": [
+        "Must meet minimum eligibility: 8th / 10th Pass + ITI Plumber or Nal Jal Mitra",
+        "Valid verification document or trade certification where required"
+      ],
+      "preferred_qualifications": [
+        "Prior hands-on vocational interest or relevant coursework"
+      ]
+    },
+    "required_skills": [
+      {
+        "name": "PVC Pipe Fitting & Rural Water Supply",
+        "importance": "required",
+        "weight": 1
+      }
+    ],
+    "recommended_skills": [
+      {
+        "name": "Problem Solving",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Customer Communication",
+        "importance": "recommended",
+        "weight": 0.6
+      },
+      {
+        "name": "Time Management",
+        "importance": "recommended",
+        "weight": 0.6
+      }
+    ],
+    "matching_interests": [
+      "trades",
+      "electronics",
+      "technology"
+    ],
+    "translations": {
+      "en": {
+        "title": "Plumber & Rural Water Supply Technician (Nal Jal Mitra)",
+        "description": "Installs and maintains HDPE rural pipeline networks, overhead water tank valves, domestic sanitary fittings, and tap connections under Jal Jeevan Mission."
+      },
+      "te": {
+        "title": "ప్లంబర్ & గ్రామీణ నీటి సరఫరా టెక్నీషియన్ (నల్ జల్ మిత్ర)",
+        "description": "జల్ జీవన్ మిషన్ (హర్ ఘర్ జల్) క్రింద గ్రామ పైప్‌లైన్లు, ఓవర్‌హెడ్ ట్యాంక్ వాల్వ్‌లు మరియు ఇంటింటి కుళాయి కనెక్షన్లను నిర్వహిస్తారు."
+      },
+      "hi": {
+        "title": "प्लंबर एवं ग्रामीण जल आपूर्ति तकनीशियन (नल जल मित्र)",
+        "description": "जल जीवन मिशन के अंतर्गत ग्रामीण पेयजल पाइपलाइन नेटवर्क, ओवरहेड टैंक वाल्व और घरेलू नल कनेक्शन की स्थापना व रखरखाव करता है।"
+      }
+    }
   }
 ]

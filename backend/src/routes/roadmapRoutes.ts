@@ -4,6 +4,11 @@ import { authenticateUser, optionalAuth } from '../middleware/auth';
 
 const router = Router();
 
+// List all available career roadmaps
+router.get('/', optionalAuth, (req, res, next) => {
+  void roadmapController.getRoadmaps(req as any, res, next);
+});
+
 // Retrieve or dynamically tailor career roadmap
 router.get('/career/:careerId', optionalAuth, (req, res, next) => {
   void roadmapController.getRoadmapByCareer(req as any, res, next);

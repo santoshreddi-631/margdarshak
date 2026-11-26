@@ -335,17 +335,40 @@ export default function CareerAssessmentScreen() {
   if (isCompleted) {
     const topRec = recommendations[0];
     const topScore = topRec ? `${topRec.match_score}%` : '93%';
-    const topTitle = topRec?.career?.title || topRec?.career?.translation?.title || 'Solar PV Systems Technician';
-    const topSector = topRec?.career?.category?.name || 'Clean Energy & Rural Electrification';
+    const topTitle = topRec?.career?.title || topRec?.career?.translation?.title || 'Recommended Pathway';
+    const topSector = topRec?.career?.category?.name || 'Vocational Sector';
     const topCareerId = topRec?.career_id || topRec?.career?.id || 'c-1';
     const topReasons = topRec?.match_reasons && topRec.match_reasons.length > 0
       ? topRec.match_reasons
       : [
           'Matches your practical hands-on and field work preferences',
-          'High regional demand in your district with free PMKVY 4.0 training',
+          'High regional demand aligned with verified government training',
           `Direct eligibility with ${education.qualification.replace('_', ' ')}`,
         ];
     const altRecs = recommendations.slice(1);
+
+    const userStrengthLabels = Object.entries(skillProficiencies)
+      .filter(([, level]) => level === 'advanced' || level === 'intermediate')
+      .map(([k]) => k.replace(/_/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase()));
+    const careerSkillNames = (topRec?.career?.skills || []).map((s) => s.name).filter(Boolean);
+    const matchedStrengths =
+      userStrengthLabels.length > 0
+        ? userStrengthLabels.slice(0, 4)
+        : careerSkillNames.slice(0, 3);
+    const dynamicSkillGaps = careerSkillNames
+      .filter(
+        (name) =>
+          !userStrengthLabels.some(
+            (u) => u.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(u.toLowerCase())
+          )
+      )
+      .slice(0, 4);
+    const skillsToAcquire =
+      dynamicSkillGaps.length > 0
+        ? dynamicSkillGaps
+        : careerSkillNames.length > 0
+        ? careerSkillNames.slice(0, 3)
+        : [topSector];
 
     return (
       <View style={styles.screen}>
@@ -386,27 +409,22 @@ export default function CareerAssessmentScreen() {
               <View style={styles.skillMatchCol}>
                 <Text style={styles.skillMatchHeader}>Your Strengths</Text>
                 <View style={styles.skillTagList}>
-                  <View style={styles.skillTagStrength}>
-                    <Text style={styles.skillTagStrengthText}>Problem Solving</Text>
-                  </View>
-                  <View style={styles.skillTagStrength}>
-                    <Text style={styles.skillTagStrengthText}>Teamwork</Text>
-                  </View>
-                  <View style={styles.skillTagStrength}>
-                    <Text style={styles.skillTagStrengthText}>Basic Wiring</Text>
-                  </View>
+                  {matchedStrengths.map((sk) => (
+                    <View key={sk} style={styles.skillTagStrength}>
+                      <Text style={styles.skillTagStrengthText}>{sk}</Text>
+                    </View>
+                  ))}
                 </View>
               </View>
 
               <View style={styles.skillMatchCol}>
                 <Text style={styles.skillGapHeader}>Skills You Will Learn</Text>
                 <View style={styles.skillTagList}>
-                  <View style={styles.skillTagGap}>
-                    <Text style={styles.skillTagGapText}>PV Sizing</Text>
-                  </View>
-                  <View style={styles.skillTagGap}>
-                    <Text style={styles.skillTagGapText}>Inverter Repair</Text>
-                  </View>
+                  {skillsToAcquire.map((sk) => (
+                    <View key={sk} style={styles.skillTagGap}>
+                      <Text style={styles.skillTagGapText}>{sk}</Text>
+                    </View>
+                  ))}
                 </View>
               </View>
             </View>

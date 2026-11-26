@@ -23,7 +23,12 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuth } from '@/context/AuthContext';
-import { fetchOpportunities, type ApiOpportunity } from '@/services/api';
+import {
+  fetchOpportunities,
+  fetchJobPortals,
+  type ApiOpportunity,
+  type ApiJobPortal,
+} from '@/services/api';
 
 export default function OpportunitiesScreen() {
   const { language } = useAuth();
@@ -31,34 +36,55 @@ export default function OpportunitiesScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
 
+  const [viewMode, setViewMode] = useState<'opportunities' | 'portals'>('opportunities');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [opportunities, setOpportunities] = useState<ApiOpportunity[]>([]);
+  const [portals, setPortals] = useState<ApiJobPortal[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const categories = [
     { id: 'all', label: t('opportunities.all') },
     { id: 'internship', label: t('opportunities.internships') },
+    { id: 'apprenticeship', label: t('opportunities.apprenticeships') },
     { id: 'job', label: t('opportunities.jobs') },
     { id: 'scholarship', label: t('opportunities.scholarships') },
-    { id: 'skilling', label: t('opportunities.govtSchemes') },
+    { id: 'government_scheme', label: t('opportunities.govtSchemes') },
+    { id: 'skilling', label: t('opportunities.skilling') },
+    { id: 'self_employment', label: t('opportunities.selfEmployment') },
     { id: 'free_course', label: t('opportunities.freeCourses') },
     { id: 'training_program', label: t('opportunities.training') },
   ];
 
   useEffect(() => {
-    async function loadOpportunities() {
+    async function loadData() {
       setLoading(true);
       try {
-        const data = await fetchOpportunities(activeCategory, language);
-        setOpportunities(data);
+        const [oppsData, portalsData] = await Promise.all([
+          fetchOpportunities(activeCategory, language),
+          fetchJobPortals(undefined, language),
+        ]);
+        setOpportunities(oppsData);
+        setPortals(portalsData);
       } catch (_e) {
       } finally {
         setLoading(false);
       }
     }
-    loadOpportunities();
+    loadData();
   }, [activeCategory, language]);
+
+  const filteredPortals = useMemo(() => {
+    if (!searchQuery.trim()) return portals;
+    const q = searchQuery.toLowerCase();
+    return portals.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.target_users.toLowerCase().includes(q) ||
+        p.portal_type.toLowerCase().includes(q)
+    );
+  }, [portals, searchQuery]);
 
   const filteredList = useMemo(() => {
     if (!searchQuery.trim()) return opportunities;
@@ -118,48 +144,155 @@ export default function OpportunitiesScreen() {
           />
         </View>
 
-        {/* Filter Pills Carousel (Image 1 Style: active is dark #222222) */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoryScroll}
-        >
-          {categories.map((cat) => {
-            const isSelected = activeCategory === cat.id;
-            return (
-              <Pressable
-                key={cat.id}
-                onPress={() => setActiveCategory(cat.id)}
-                style={({ pressed }) => [
-                  styles.categoryPill,
-                  isSelected && styles.categoryPillActive,
-                  pressed && { opacity: 0.85 },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.categoryPillText,
-                    isSelected && styles.categoryPillTextActive,
+        {/* View Mode Switcher: Schemes & Openings vs Official Portals */}
+        <View style={styles.viewToggleRow}>
+          <Pressable
+            onPress={() => setViewMode('opportunities')}
+            style={[
+              styles.viewToggleBtn,
+              viewMode === 'opportunities' && styles.viewToggleBtnActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.viewToggleText,
+                viewMode === 'opportunities' && styles.viewToggleTextActive,
+              ]}
+            >
+              {`${t('opportunities.schemesTab') || 'Schemes & Openings'} (${opportunities.length})`}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setViewMode('portals')}
+            style={[
+              styles.viewToggleBtn,
+              viewMode === 'portals' && styles.viewToggleBtnActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.viewToggleText,
+                viewMode === 'portals' && styles.viewToggleTextActive,
+              ]}
+            >
+              {`${t('opportunities.portalsTab') || 'Official Portals'} (${portals.length})`}
+            </Text>
+          </Pressable>
+        </View>
+
+        {/* Filter Pills Carousel (when viewing Opportunities) */}
+        {viewMode === 'opportunities' && (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryScroll}
+          >
+            {categories.map((cat) => {
+              const isSelected = activeCategory === cat.id;
+              return (
+                <Pressable
+                  key={cat.id}
+                  onPress={() => setActiveCategory(cat.id)}
+                  style={({ pressed }) => [
+                    styles.categoryPill,
+                    isSelected && styles.categoryPillActive,
+                    pressed && { opacity: 0.85 },
                   ]}
                 >
-                  {cat.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
+                  <Text
+                    style={[
+                      styles.categoryPillText,
+                      isSelected && styles.categoryPillTextActive,
+                    ]}
+                  >
+                    {cat.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        )}
 
-        {/* Opportunities Listing (Responsive Desktop Grid) */}
+        {/* Opportunities / Portals Listing (Responsive Desktop Grid) */}
         {loading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={Colors.primary} />
             <Text style={styles.loadingText}>Fetching government programs...</Text>
           </View>
+        ) : viewMode === 'portals' ? (
+          filteredPortals.length === 0 ? (
+            <EmptyState
+              title={t('opportunities.noOpportunitiesFound')}
+              description="No verified job or internship portals matched your search."
+              actionLabel={t('opportunities.clearFilters')}
+              onAction={() => setSearchQuery('')}
+            />
+          ) : (
+            <View style={isDesktop ? styles.desktopGrid : styles.mobileGrid}>
+              {filteredPortals.map((portal) => (
+                <Card
+                  key={portal.id}
+                  variant="elevated"
+                  style={isDesktop ? styles.desktopCard : styles.opportunityCard}
+                >
+                  <View style={styles.cardHeaderRow}>
+                    <Badge
+                      label={portal.portal_type.replace('_', ' ').toUpperCase()}
+                      variant="primary"
+                    />
+                    <View style={styles.deadlineBadge}>
+                      <Text style={styles.deadlineText}>{portal.geographic_coverage}</Text>
+                    </View>
+                  </View>
+
+                  <Text style={styles.oppTitle}>{portal.name}</Text>
+
+                  <View style={styles.ministryRow}>
+                    <Building2 size={14} color={Colors.textSecondary} />
+                    <Text style={styles.ministryText}>{portal.application_method}</Text>
+                  </View>
+
+                  <View style={styles.benefitBox}>
+                    <Text style={styles.benefitLabel}>
+                      {t('opportunities.targetUsers') || 'Target Applicants'}:
+                    </Text>
+                    <Text style={styles.benefitValue}>{portal.target_users}</Text>
+                  </View>
+
+                  <View style={styles.eligibilityBlock}>
+                    <Text style={styles.eligibilityText}>{portal.description}</Text>
+                  </View>
+
+                  <View style={styles.cardActionRow}>
+                    <View style={styles.domainPreview}>
+                      <Text style={styles.domainText}>
+                        Portal: {getDomainFromUrl(portal.url)}
+                      </Text>
+                    </View>
+                    <Pressable
+                      onPress={() => handleOpenPortal(portal.url)}
+                      accessibilityRole="link"
+                      accessibilityLabel={`${t('opportunities.visitPortal') || 'Open Portal'} - ${portal.name}`}
+                      style={({ pressed }) => [
+                        styles.portalButton,
+                        pressed && styles.portalButtonPressed,
+                      ]}
+                    >
+                      <Text style={styles.portalButtonText}>
+                        {t('opportunities.visitPortal') || 'Open Verified Portal'}
+                      </Text>
+                      <ExternalLink size={14} color="#FFFFFF" />
+                    </Pressable>
+                  </View>
+                </Card>
+              ))}
+            </View>
+          )
         ) : filteredList.length === 0 ? (
           <EmptyState
-            title={t('opportunities.noOpportunities')}
+            title={t('opportunities.noOpportunitiesFound')}
             description="No opportunities found matching your search. Try resetting the category filters."
-            actionLabel={t('opportunities.browseAll')}
+            actionLabel={t('opportunities.clearFilters')}
             onAction={() => {
               setActiveCategory('all');
               setSearchQuery('');
@@ -428,6 +561,34 @@ const styles = StyleSheet.create({
   },
   portalButtonText: {
     fontSize: Typography.fontSizes.subtext,
+    color: '#FFFFFF',
+    fontWeight: Typography.fontWeights.bold,
+  },
+  viewToggleRow: {
+    flexDirection: 'row',
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.full,
+    padding: 4,
+    marginBottom: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  viewToggleBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: BorderRadius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  viewToggleBtnActive: {
+    backgroundColor: Colors.dark,
+  },
+  viewToggleText: {
+    fontSize: Typography.fontSizes.subtext,
+    fontWeight: Typography.fontWeights.semibold,
+    color: Colors.textSecondary,
+  },
+  viewToggleTextActive: {
     color: '#FFFFFF',
     fontWeight: Typography.fontWeights.bold,
   },

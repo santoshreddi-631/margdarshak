@@ -97,7 +97,7 @@ def test_mandatory_eligibility_filters_before_ranking():
         filter_ineligible=True
     )
 
-    result = recommendation_engine.generate_recommendations(student_10th, limit=10)
+    result = recommendation_engine.generate_recommendations(student_10th, limit=20)
     # All returned recommendations must be strictly eligible
     for rec in result.recommendations:
         assert rec.education_eligibility.is_eligible is True
@@ -113,7 +113,7 @@ def test_ineligible_careers_penalized_when_not_filtered():
         filter_ineligible=False
     )
 
-    result = recommendation_engine.generate_recommendations(student_10th, limit=10)
+    result = recommendation_engine.generate_recommendations(student_10th, limit=20)
     eligible_recs = [r for r in result.recommendations if r.education_eligibility.is_eligible]
     ineligible_recs = [r for r in result.recommendations if not r.education_eligibility.is_eligible]
 

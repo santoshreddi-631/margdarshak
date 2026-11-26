@@ -11,30 +11,99 @@ export class RoadmapService {
   /**
    * Resolves a career identifier (legacy c-1/c-2 alias, slug, or UUID) to a canonical career ID
    */
+  private isUuid(val?: string | null): boolean {
+    return Boolean(val && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val));
+  }
+
   private resolveCareerId(careerInput: string): string {
     const trimmed = careerInput.trim().toLowerCase();
 
-    // Legacy short aliases used in tests and mobile drafts
-    if (trimmed === 'c-1' || trimmed.includes('solar')) {
-      return 'a1000000-0000-0000-0000-000000000001'; // Solar PV Systems Technician
-    }
-    if (trimmed === 'c-2' || trimmed.includes('web') || trimmed.includes('frontend') || trimmed.includes('junior-web')) {
-      return 'a1000000-0000-0000-0000-000000000006'; // Frontend Developer
-    }
-    if (trimmed === 'c-3' || trimmed.includes('agri') || trimmed.includes('farm') || trimmed.includes('drone')) {
-      return 'a1000000-0000-0000-0000-000000000023'; // Agriculture Extension Worker
-    }
-    if (trimmed.includes('electri')) {
-      return 'a1000000-0000-0000-0000-000000000024'; // Electrician
+    // Exact legacy short aliases used in tests and mobile drafts (no substring hijacking)
+    const legacyAliasMap: Record<string, string> = {
+      'c-1': 'a1000000-0000-0000-0000-000000000001',
+      'solar-technician': 'a1000000-0000-0000-0000-000000000001',
+      'solar-pv-technician': 'a1000000-0000-0000-0000-000000000001',
+      'c-2': 'a1000000-0000-0000-0000-000000000006',
+      'frontend-developer': 'a1000000-0000-0000-0000-000000000006',
+      'frontend-web-developer': 'a1000000-0000-0000-0000-000000000006',
+      'c-3': 'a1000000-0000-0000-0000-000000000023',
+      'agriculture-extension-worker': 'a1000000-0000-0000-0000-000000000023',
+      electrician: 'a1000000-0000-0000-0000-000000000024',
+    };
+    if (legacyAliasMap[trimmed]) {
+      return legacyAliasMap[trimmed];
     }
 
-    // Match by slug in seed data
+    // Match exact UUID or exact slug in seed data
     const matchedSeed = CAREERS_DATA.find(
-      (c) => c.id === careerInput || c.slug.toLowerCase() === trimmed || c.title.toLowerCase().includes(trimmed)
+      (c) => c.id.toLowerCase() === trimmed || c.slug.toLowerCase() === trimmed
     );
     if (matchedSeed) return matchedSeed.id;
 
-    return careerInput;
+    return careerInput.trim();
+  }
+
+  /**
+   * List all available career roadmaps with localized career titles
+   */
+  async getRoadmapsList(lang: LanguageCode = 'en') {
+    if (isSupabaseConfigured()) {
+      try {
+        const client = getAdminClient();
+        const { data, error } = await client
+          .from('roadmaps')
+          .select(`
+            id,
+            career_id,
+            title,
+            total_stages,
+            estimated_duration,
+            career:careers (
+              slug,
+              title,
+              translations:career_translations (
+                language_code,
+                title
+              )
+            )
+          `)
+          .order('career_id', { ascending: true });
+
+        if (!error && data && data.length > 0) {
+          return data.map((rm: any) => {
+            const c = Array.isArray(rm.career) ? rm.career[0] : rm.career;
+            const tr =
+              c?.translations?.find((t: any) => t.language_code === lang) ||
+              c?.translations?.find((t: any) => t.language_code === 'en');
+            return {
+              id: rm.id,
+              career_id: rm.career_id,
+              career_slug: c?.slug,
+              career_title: tr?.title || c?.title || rm.title,
+              title: rm.title,
+              total_stages: rm.total_stages,
+              estimated_duration: rm.estimated_duration,
+            };
+          });
+        }
+      } catch (err: any) {
+        logger.warn('Failed fetching roadmaps list:', err.message);
+      }
+    }
+
+    return ROADMAPS_DATA.map((rm) => {
+      const c = CAREERS_DATA.find((item) => item.id === rm.career_id);
+      const tr = c?.translations?.[lang] || c?.translations?.en;
+      return {
+        id: rm.id,
+        career_id: rm.career_id,
+        career_slug: c?.slug,
+        career_title: tr?.title || c?.title || rm.title,
+        title: rm.title,
+        total_stages: rm.total_stages,
+        estimated_duration: rm.estimated_duration,
+      };
+    });
   }
 
   /**
@@ -48,38 +117,56 @@ export class RoadmapService {
     lang: LanguageCode = 'en',
     token?: string
   ): Promise<Roadmap> {
-    const careerId = this.resolveCareerId(careerInput);
+    let careerId = this.resolveCareerId(careerInput);
     logger.info(`Generating roadmap for career: ${careerInput} -> resolved: ${careerId} (user: ${userId || 'guest'})`);
 
     let rawRoadmap: any = null;
     let rawSteps: any[] = [];
+    let dbCareerFallback: any = null;
 
-    // 1. Try loading roadmap from Supabase
+    // 1. Try loading career & roadmap from Supabase
     if (isSupabaseConfigured()) {
       try {
         const client = getAdminClient();
-        const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(careerId);
-        let rmQuery = client.from('roadmaps').select('*');
-        if (isUuid) {
-          rmQuery = rmQuery.or(`career_id.eq.${careerId},id.eq.${careerId}`);
+        if (!this.isUuid(careerId)) {
+          const { data: slugCareer } = await client
+            .from('careers')
+            .select('id, slug, title, training_duration, translations:career_translations(language_code, title, description)')
+            .eq('slug', careerId)
+            .maybeSingle();
+          if (slugCareer?.id) {
+            dbCareerFallback = slugCareer;
+            careerId = slugCareer.id;
+          }
         } else {
-          const resolvedId = careerId === 'c-1' || careerId === 'solar-pv-technician'
-            ? 'a1000000-0000-0000-0000-000000000001'
-            : 'a1000000-0000-0000-0000-000000000006';
-          rmQuery = rmQuery.or(`career_id.eq.${resolvedId},id.eq.${resolvedId}`);
+          const { data: uuidCareer } = await client
+            .from('careers')
+            .select('id, slug, title, training_duration, translations:career_translations(language_code, title, description)')
+            .eq('id', careerId)
+            .maybeSingle();
+          if (uuidCareer) {
+            dbCareerFallback = uuidCareer;
+          }
         }
-        let { data: rm } = await rmQuery.maybeSingle();
 
-        if (rm) {
-          rawRoadmap = rm;
-          const { data: steps } = await client
-            .from('roadmap_steps')
+        if (this.isUuid(careerId)) {
+          const { data: rm } = await client
+            .from('roadmaps')
             .select('*')
-            .eq('roadmap_id', rm.id)
-            .order('step_number', { ascending: true });
+            .or(`career_id.eq.${careerId},id.eq.${careerId}`)
+            .maybeSingle();
 
-          if (steps && steps.length > 0) {
-            rawSteps = steps;
+          if (rm) {
+            rawRoadmap = rm;
+            const { data: steps } = await client
+              .from('roadmap_steps')
+              .select('*')
+              .eq('roadmap_id', rm.id)
+              .order('step_number', { ascending: true });
+
+            if (steps && steps.length > 0) {
+              rawSteps = steps;
+            }
           }
         }
       } catch (err: any) {
@@ -87,20 +174,29 @@ export class RoadmapService {
       }
     }
 
-    // 2. If not found in DB, pull from master seed data
+    // 2. If not found in DB, pull from master seed data or synthesize from DB career
     if (!rawRoadmap || rawSteps.length === 0) {
       let seedRoadmap = ROADMAPS_DATA.find((r) => r.career_id === careerId || r.id === careerId);
 
-      // If not found by direct ID, check if career exists in CAREERS_DATA and synthesize or find
       if (!seedRoadmap) {
         const careerObj = CAREERS_DATA.find(
-          (c) => c.id === careerId || c.slug.toLowerCase() === careerInput.toLowerCase() || c.title.toLowerCase().includes(careerInput.toLowerCase())
+          (c) => c.id === careerId || c.slug.toLowerCase() === careerInput.toLowerCase()
         );
         if (careerObj) {
-          seedRoadmap = ROADMAPS_DATA.find((r) => r.career_id === careerObj.id);
-          if (!seedRoadmap) {
-            seedRoadmap = this.synthesizeRoadmapForCareer(careerObj);
+          seedRoadmap =
+            ROADMAPS_DATA.find((r) => r.career_id === careerObj.id) ||
+            this.synthesizeRoadmapForCareer(careerObj);
+        } else if (dbCareerFallback) {
+          const trMap: Record<string, any> = {};
+          for (const tr of dbCareerFallback.translations || []) {
+            trMap[tr.language_code] = tr;
           }
+          seedRoadmap = this.synthesizeRoadmapForCareer({
+            id: dbCareerFallback.id,
+            title: dbCareerFallback.title,
+            training_duration: dbCareerFallback.training_duration,
+            translations: trMap,
+          });
         }
       }
 
@@ -117,8 +213,23 @@ export class RoadmapService {
       };
       rawSteps = seedRoadmap.steps.map((s) => ({
         ...s,
-        roadmap_id: seedRoadmap.id,
+        roadmap_id: seedRoadmap!.id,
       }));
+    }
+
+    // Localize roadmap title when non-English translation exists
+    if (lang !== 'en') {
+      const dbTr = dbCareerFallback?.translations?.find((t: any) => t.language_code === lang);
+      const seedTr = !dbTr
+        ? CAREERS_DATA.find((c) => c.id === (rawRoadmap.career_id || careerId))?.translations?.[lang]
+        : null;
+      const localizedTitle = dbTr?.title || seedTr?.title;
+      if (localizedTitle) {
+        rawRoadmap = {
+          ...rawRoadmap,
+          title: lang === 'hi' ? `${localizedTitle} सीखने का रोडमैप` : `${localizedTitle} అభ్యాస మార్గదర్శి`,
+        };
+      }
     }
 
     // 3. Dynamic Skill Comparison & Tailoring
@@ -153,8 +264,8 @@ export class RoadmapService {
             });
           }
 
-          // b. Fetch existing user_progress records
-          const stepIds = rawSteps.map((s) => s.id);
+          // b. Fetch existing user_progress records (UUID step IDs only)
+          const stepIds = rawSteps.map((s) => s.id).filter((id) => this.isUuid(id));
           if (stepIds.length > 0) {
             const { data: progressData } = await client
               .from('user_progress')
@@ -276,9 +387,10 @@ export class RoadmapService {
       };
     });
 
-    // 5. Persist initial tailored progress rows into user_progress
+    // 5. Persist initial tailored progress rows into user_progress (UUID step IDs only)
+    const uuidRecordsToPersist = recordsToPersist.filter((r) => this.isUuid(r.roadmap_step_id));
     if (userId && recordsToPersist.length > 0) {
-      if (isSupabaseConfigured()) {
+      if (isSupabaseConfigured() && uuidRecordsToPersist.length > 0) {
         try {
           const client = token && !token.includes('dev') && !token.includes('mock')
             ? getUserClient(token)
@@ -286,8 +398,8 @@ export class RoadmapService {
 
           await client
             .from('user_progress')
-            .upsert(recordsToPersist, { onConflict: 'user_id,roadmap_step_id' });
-          logger.info(`Persisted ${recordsToPersist.length} tailored progress rows for user ${userId}`);
+            .upsert(uuidRecordsToPersist, { onConflict: 'user_id,roadmap_step_id' });
+          logger.info(`Persisted ${uuidRecordsToPersist.length} tailored progress rows for user ${userId}`);
         } catch (persistErr: any) {
           logger.warn('Failed persisting tailored progress to Supabase:', persistErr.message);
         }
@@ -355,7 +467,7 @@ export class RoadmapService {
     }
     userMem.set(roadmapStepId, fallbackRecord);
 
-    if (!isSupabaseConfigured()) {
+    if (!isSupabaseConfigured() || !this.isUuid(roadmapStepId)) {
       return fallbackRecord;
     }
 
