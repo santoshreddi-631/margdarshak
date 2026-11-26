@@ -2,7 +2,7 @@
   "expo": {
     "name": "Margdarshak",
     "slug": "margdarshak",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "careerguide",
@@ -12,6 +12,7 @@
     },
     "android": {
       "package": "com.csp.margdarshak",
+      "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#315D48",
         "foregroundImage": "./assets/android-icon-foreground.png"
