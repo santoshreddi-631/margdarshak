@@ -35,11 +35,13 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { signIn, completeOnboarding } = useAuth();
+  const { signIn, resetPassword, completeOnboarding, isDevMode } = useAuth();
   const { t } = useTranslation();
   const [authError, setAuthError] = useState<string | null>(null);
   const [forgotModalVisible, setForgotModalVisible] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [resetError, setResetError] = useState<string | null>(null);
+  const [isSendingReset, setIsSendingReset] = useState(false);
 
   const {
     control,
@@ -75,11 +77,36 @@ export default function LoginScreen() {
 
   const handleForgotPassword = () => {
     setResetEmailSent(false);
+    setResetError(null);
     setForgotModalVisible(true);
   };
 
-  const triggerResetEmail = () => {
-    setResetEmailSent(true);
+  const triggerResetEmail = async () => {
+    const email = enteredEmail?.trim() || '';
+    const parsedEmail = z.string().email().safeParse(email);
+    if (!parsedEmail.success) {
+      setResetError(t('onboarding.invalidResetEmail'));
+      return;
+    }
+
+    setIsSendingReset(true);
+    setResetError(null);
+    try {
+      const result = await resetPassword(email);
+      if (result.error) {
+        setResetError(
+          isDevMode ? t('onboarding.resetPasswordUnavailable') : result.error
+        );
+        return;
+      }
+      setResetEmailSent(true);
+    } catch (error) {
+      setResetError(
+        error instanceof Error ? error.message : t('errors.genericError')
+      );
+    } finally {
+      setIsSendingReset(false);
+    }
   };
 
   return (
@@ -192,7 +219,7 @@ export default function LoginScreen() {
             <View style={styles.modalHeader}>
               <View style={styles.modalHeaderTitleRow}>
                 <HelpCircle size={20} color={Colors.primary} />
-                <Text style={styles.modalTitle}>Reset Your Password</Text>
+                <Text style={styles.modalTitle}>{t('onboarding.resetPasswordTitle')}</Text>
               </View>
               <Pressable
                 onPress={() => setForgotModalVisible(false)}
@@ -209,13 +236,12 @@ export default function LoginScreen() {
                   <View style={styles.checkCircle}>
                     <Check size={18} color="#FFFFFF" strokeWidth={2.5} />
                   </View>
-                  <Text style={styles.successTitle}>Reset Link Sent</Text>
+                  <Text style={styles.successTitle}>{t('onboarding.resetPasswordSent')}</Text>
                   <Text style={styles.successDesc}>
-                    We have dispatched password reset instructions to{' '}
-                    <Text style={{ fontWeight: 'bold', color: '#FFFFFF' }}>{enteredEmail || 'your email'}</Text>. Please follow the instructions to set a new password.
+                    {t('onboarding.resetPasswordSentDescription', { email: enteredEmail })}
                   </Text>
                   <Button
-                    title="Done"
+                    title={t('common.done')}
                     variant="primary"
                     size="md"
                     onPress={() => setForgotModalVisible(false)}
@@ -225,20 +251,26 @@ export default function LoginScreen() {
               ) : (
                 <>
                   <Text style={styles.modalDesc}>
-                    Enter your registered email address below. We'll send you a secure link or OTP to recover your career profile.
+                    {t('onboarding.resetPasswordDescription')}
                   </Text>
                   <View style={styles.emailDisplayBox}>
                     <Mail size={16} color={Colors.textSecondary} />
                     <Text style={styles.emailDisplayText}>
-                      {enteredEmail || 'Enter your email in the login form first'}
+                      {enteredEmail || t('onboarding.enterEmailFirst')}
                     </Text>
                   </View>
+                  {resetError ? (
+                    <Text accessibilityRole="alert" style={styles.resetErrorText}>
+                      {resetError}
+                    </Text>
+                  ) : null}
                   <Button
-                    title="Send Password Reset Link"
+                    title={t('onboarding.sendResetLink')}
                     variant="primary"
                     size="md"
-                    disabled={!enteredEmail || !enteredEmail.includes('@')}
-                    onPress={triggerResetEmail}
+                    loading={isSendingReset}
+                    disabled={!enteredEmail?.trim()}
+                    onPress={() => void triggerResetEmail()}
                     style={{ marginTop: Spacing.md }}
                   />
                 </>
@@ -406,5 +438,10 @@ const styles = StyleSheet.create({
     lineHeight: Typography.lineHeights.subtext,
     color: Colors.textSecondary,
     textAlign: 'center',
+  },
+  resetErrorText: {
+    color: Colors.danger,
+    fontSize: Typography.fontSizes.caption,
+    marginTop: Spacing.xs,
   },
 });

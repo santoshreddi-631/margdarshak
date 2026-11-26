@@ -55,7 +55,7 @@ export default function AdminScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
   const { user, isAdmin } = useAuth();
-  const isVerifiedAdmin = isAdmin && (user?.role === 'admin' || user?.email?.toLowerCase().includes('admin'));
+  const isVerifiedAdmin = isAdmin && user?.role === 'admin';
 
   const [activeTab, setActiveTab] = useState<AdminTab>('careers');
   const [loading, setLoading] = useState(true);

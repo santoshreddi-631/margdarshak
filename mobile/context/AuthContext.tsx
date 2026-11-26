@@ -29,10 +29,10 @@ export interface AuthContextType {
   isDevMode: boolean;
   isAdmin: boolean;
   isLoading: boolean;
-  setIsAdmin: (admin: boolean) => Promise<void>;
   setLanguage: (lang: SupportedLanguage) => Promise<void>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string }>;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
+  resetPassword: (email: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   updateProfile: (data: UserProfile) => Promise<void>;
   completeOnboarding: () => Promise<void>;
@@ -44,7 +44,6 @@ const STORAGE_KEYS = {
   ONBOARDED: '@margdarshak_onboarded',
   PROFILE: '@margdarshak_user_profile',
   DEV_SESSION: '@margdarshak_dev_session',
-  IS_ADMIN: '@margdarshak_is_admin',
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -61,12 +60,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     async function loadStorageData() {
       try {
-        const [savedLang, savedOnboarded, savedProfile, savedDevSession, savedIsAdmin] = await Promise.all([
+        const [savedLang, savedOnboarded, savedProfile, savedDevSession] = await Promise.all([
           AsyncStorage.getItem(STORAGE_KEYS.LANG),
           AsyncStorage.getItem(STORAGE_KEYS.ONBOARDED),
           AsyncStorage.getItem(STORAGE_KEYS.PROFILE),
           AsyncStorage.getItem(STORAGE_KEYS.DEV_SESSION),
-          AsyncStorage.getItem(STORAGE_KEYS.IS_ADMIN),
         ]);
 
         if (savedLang && (savedLang === 'en' || savedLang === 'te' || savedLang === 'hi')) {
@@ -78,10 +76,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (savedOnboarded === 'true') {
           setIsOnboarded(true);
-        }
-
-        if (savedIsAdmin === 'true') {
-          setIsAdminState(true);
         }
 
         if (savedProfile) {
@@ -97,26 +91,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const { data } = await supabase.auth.getSession();
           if (data?.session?.user) {
             const userEmail = data.session.user.email ?? '';
-            const userRole = data.session.user.user_metadata?.role || data.session.user.role || '';
-            const isUserAdmin = userRole === 'admin' || userEmail.toLowerCase().includes('admin');
+            const isUserAdmin = data.session.user.app_metadata?.role === 'admin';
             setUser({
               id: data.session.user.id,
               email: userEmail,
               fullName: data.session.user.user_metadata?.full_name ?? '',
               role: isUserAdmin ? 'admin' : 'authenticated',
             });
-            if (isUserAdmin) {
-              setIsAdminState(true);
-              await AsyncStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
-            }
+            setIsAdminState(isUserAdmin);
           }
         } else if (savedDevSession) {
           try {
-            const parsedUser = JSON.parse(savedDevSession);
-            setUser(parsedUser);
-            if (parsedUser.role === 'admin' || parsedUser.email?.toLowerCase().includes('admin')) {
-              setIsAdminState(true);
-            }
+            const parsedUser = JSON.parse(savedDevSession) as AuthUser;
+            setUser({ ...parsedUser, role: 'authenticated' });
+            setIsAdminState(false);
           } catch {
             // ignore parse error
           }
@@ -135,18 +123,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
         if (session?.user) {
           const userEmail = session.user.email ?? '';
-          const userRole = session.user.user_metadata?.role || session.user.role || '';
-          const isUserAdmin = userRole === 'admin' || userEmail.toLowerCase().includes('admin');
+          const isUserAdmin = session.user.app_metadata?.role === 'admin';
           setUser({
             id: session.user.id,
             email: userEmail,
             fullName: session.user.user_metadata?.full_name ?? '',
             role: isUserAdmin ? 'admin' : 'authenticated',
           });
-          if (isUserAdmin) {
-            setIsAdminState(true);
-            AsyncStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
-          }
+          setIsAdminState(isUserAdmin);
         } else {
           setUser(null);
           setIsAdminState(false);
@@ -158,15 +142,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
     }
   }, []);
-
-  const setIsAdmin = async (admin: boolean) => {
-    setIsAdminState(admin);
-    if (admin) {
-      await AsyncStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
-    } else {
-      await AsyncStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
-    }
-  };
 
   const setLanguage = async (newLang: SupportedLanguage) => {
     setLangState(newLang);
@@ -180,7 +155,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const isUserAdmin = email.toLowerCase().includes('admin');
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -188,7 +162,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         options: {
           data: {
             full_name: fullName,
-            role: isUserAdmin ? 'admin' : 'authenticated',
           },
         },
       });
@@ -202,11 +175,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           id: data.user.id,
           email: data.user.email ?? email,
           fullName,
-          role: isUserAdmin ? 'admin' : 'authenticated',
+          role: 'authenticated',
         });
-        if (isUserAdmin) {
-          await setIsAdmin(true);
-        }
+        setIsAdminState(false);
       }
       return {};
     }
@@ -216,18 +187,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       id: `dev-user-${Date.now()}`,
       email,
       fullName,
-      role: isUserAdmin ? 'admin' : 'authenticated',
+      role: 'authenticated',
     };
     await AsyncStorage.setItem(STORAGE_KEYS.DEV_SESSION, JSON.stringify(mockUser));
     setUser(mockUser);
-    if (isUserAdmin) {
-      await setIsAdmin(true);
-    }
+    setIsAdminState(false);
     return {};
   };
 
   const signIn = async (email: string, password: string) => {
-    const isUserAdmin = email.toLowerCase().includes('admin');
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -239,16 +207,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       if (data.user) {
-        const userRole = data.user.user_metadata?.role || (isUserAdmin ? 'admin' : 'authenticated');
+        const isUserAdmin = data.user.app_metadata?.role === 'admin';
         setUser({
           id: data.user.id,
           email: data.user.email ?? email,
           fullName: data.user.user_metadata?.full_name ?? '',
-          role: userRole,
+          role: isUserAdmin ? 'admin' : 'authenticated',
         });
-        if (userRole === 'admin' || isUserAdmin) {
-          await setIsAdmin(true);
-        }
+        setIsAdminState(isUserAdmin);
       }
       return {};
     }
@@ -258,14 +224,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       id: 'dev-demo-user-1',
       email,
       fullName: email.split('@')[0] || 'Rahul Sharma',
-      role: isUserAdmin ? 'admin' : 'authenticated',
+      role: 'authenticated',
     };
     await AsyncStorage.setItem(STORAGE_KEYS.DEV_SESSION, JSON.stringify(devUser));
     setUser(devUser);
-    if (isUserAdmin) {
-      await setIsAdmin(true);
-    }
+    setIsAdminState(false);
     return {};
+  };
+
+  const resetPassword = async (email: string) => {
+    if (!isSupabaseConfigured || !supabase) {
+      return { error: 'Password reset is unavailable in offline development mode.' };
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    return error ? { error: error.message } : {};
   };
 
   const signOut = async () => {
@@ -274,7 +247,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     await Promise.all([
       AsyncStorage.removeItem(STORAGE_KEYS.DEV_SESSION),
-      AsyncStorage.removeItem(STORAGE_KEYS.IS_ADMIN),
     ]);
     setUser(null);
     setIsAdminState(false);
@@ -291,15 +263,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resetOnboarding = async () => {
+    await signOut();
     setIsOnboarded(false);
-    setUser(null);
     setProfile(null);
-    setIsAdminState(false);
     await Promise.all([
       AsyncStorage.removeItem(STORAGE_KEYS.ONBOARDED),
       AsyncStorage.removeItem(STORAGE_KEYS.PROFILE),
       AsyncStorage.removeItem(STORAGE_KEYS.DEV_SESSION),
-      AsyncStorage.removeItem(STORAGE_KEYS.IS_ADMIN),
     ]);
   };
 
@@ -313,10 +283,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isDevMode: !isSupabaseConfigured,
         isAdmin,
         isLoading,
-        setIsAdmin,
         setLanguage,
         signUp,
         signIn,
+        resetPassword,
         signOut,
         updateProfile,
         completeOnboarding,

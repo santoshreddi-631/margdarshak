@@ -1102,49 +1102,24 @@ export async function fetchAssessmentQuestions(lang = 'en', section?: string): P
   return getFallbackAssessmentQuestions(lang, section);
 }
 
-export interface AssessmentSubmissionPayload {
-  is_draft?: boolean;
-  current_step?: number;
-  interests?: string[];
-  skills?: Record<string, any> | any;
-  preferences?: Record<string, any> | any;
-  education?: any;
-  responses?: Array<{
+export async function submitAssessmentResponses(
+  responses: Array<{
     question_id: string;
     selected_option_ids: string[];
     rating_value?: string | null;
     text_response?: string | null;
-  }>;
-}
-
-export async function submitAssessmentResponses(
-  input:
-    | Array<{
-        question_id: string;
-        selected_option_ids: string[];
-        rating_value?: string | null;
-        text_response?: string | null;
-      }>
-    | AssessmentSubmissionPayload
+  }>
 ): Promise<{ success: boolean; data?: any }> {
-  try {
-    const body = Array.isArray(input) ? { responses: input } : input;
-    const res = await fetch(`${API_BASE_URL}/assessments/responses`, {
-      method: 'POST',
-      headers: await getAuthHeader(),
-      body: JSON.stringify(body),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      return { success: true, data: data.data };
-    }
-  } catch (_e) {}
-
-  await AsyncStorage.setItem(
-    '@margdarshak_offline_responses',
-    JSON.stringify({ input, submittedAt: new Date().toISOString() })
-  );
-  return { success: true };
+  const res = await fetch(`${API_BASE_URL}/assessments/responses`, {
+    method: 'POST',
+    headers: await getAuthHeader(),
+    body: JSON.stringify({ responses }),
+  });
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message || `Assessment submission failed (${res.status})`);
+  }
+  return { success: true, data: result.data };
 }
 
 export async function fetchUserAssessmentResponses(): Promise<any[]> {

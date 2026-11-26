@@ -52,6 +52,14 @@ const CATEGORY_LABELS: Record<string, string> = {
   digital: 'Digital & Documentation',
 };
 
+const CATEGORY_CODE_ALIASES: Record<string, string[]> = {
+  trades: ['trades', 'trades_electrical', 'renewable_energy', 'automotive'],
+  technical: ['technical', 'digital_tech', 'trades_electrical', 'automotive'],
+  agriculture: ['agriculture', 'modern_agriculture', 'agri_tech'],
+  healthcare: ['healthcare', 'healthcare_support'],
+  digital: ['digital', 'digital_services', 'digital_tech'],
+};
+
 export default function ExploreScreen() {
   const router = useRouter();
   const { language } = useAuth();
@@ -105,7 +113,7 @@ export default function ExploreScreen() {
       const categoryCode = career.category?.code || '';
       const matchesCat =
         selectedCategory === 'All' ||
-        categoryCode.toLowerCase() === selectedCategory.toLowerCase();
+        (CATEGORY_CODE_ALIASES[selectedCategory] || []).includes(categoryCode.toLowerCase());
 
       return matchesSearch && matchesCat;
     });

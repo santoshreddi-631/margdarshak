@@ -47,7 +47,6 @@ import {
   getStudentProfile,
 } from '@/services/assessmentStorage';
 import {
-  submitAssessmentResponses,
   generateRecommendations,
   fetchRecommendations,
   fetchAssessmentQuestions,
@@ -150,16 +149,6 @@ export default function CareerAssessmentScreen() {
       education,
     };
     await saveAssessmentDraft(draftData, targetStep);
-    try {
-      await submitAssessmentResponses({
-        is_draft: true,
-        current_step: targetStep,
-        interests: selectedInterests,
-        skills: skillProficiencies,
-        preferences,
-        education,
-      });
-    } catch (_e) {}
   };
 
   const getStepTitle = () => {
@@ -240,15 +229,6 @@ export default function CareerAssessmentScreen() {
         completedAt: new Date().toISOString(),
       };
       await saveCompletedAssessment(payload);
-
-      // Post to backend database
-      try {
-        await submitAssessmentResponses({
-          is_draft: false,
-          current_step: 5,
-          ...submissionPayload,
-        });
-      } catch (_e) {}
 
       // Fetch dynamic recommendation results with the student's actual answers
       const freshRecs = await generateRecommendations(language, submissionPayload);
